@@ -1,0 +1,8 @@
+extends layout
+
+block content
+    form.form-signin(method="POST",role='form')
+      h2.form-signin-heading Please sign in
+      input.form-control(type="text",name="username",placeholder="Username")
+      input.form-control(type="password",name="password",placeholder="Password")
+      button.btn.btn-lg.btn-primary.btn-block(type="submit",value="Log In") Log in

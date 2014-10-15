@@ -1,0 +1,79 @@
+extends layout
+
+block content
+  #admin.container.single
+
+    h4 Currently Editing:
+    h1
+      a(href="#{type}") #{type}
+      em="/"
+      a(href="#{doc.slug}") #{doc.slug}
+    h4
+      a(href="/admin") &laquo; Back
+    form(action="/admin/#{type}/#{doc.slug}",method="post", enctype="multipart/form-data")
+      section.row
+        -each val,index in doc
+          unless index == '_id' || index == 'slug'
+            article.row.col-md-6(class=index)
+                //p #{index}:#{key}
+
+                case index
+                  when 'title'
+                    +inputGroup('text',doc[index],index,index)
+
+                  when 'description'
+                    +textGroup('text',doc[index],index,index)
+                  when 'background'
+                  when 'logo'
+                  when 'icon'
+                  when 'thumbnail'
+                  when 'image'
+                    figure
+                      img('src'=doc[index])
+                    +imageGroup('',index,index)
+                      p.help-block Upload a new image to replace the current #{index}.
+                  when 'images'
+                    -if(Array.isArray(doc[index]))
+                      ul
+                        -each img in doc[index]
+                          li
+                            figure
+                              img('src'=img)
+                              button.btn.btn-warning.remove(type="button")
+                                span(style="float: left;line-height:1;") &nbsp;Remove&nbsp;&nbsp;
+                                span.glyphicon-remove.glyphicon(style="float: right;")
+                    -else
+                      figure
+                        img('src'=doc[index])
+                    +imageGroup('',index,index,true)
+                      p.help-block Upload New Images to the Slideshow
+                  default
+                    +inputGroup('text',doc[index],index,index)
+
+
+
+      button.btn.btn-primary.btn-large(type="submit",role="button") Update
+
+  script(src="/javascripts/admin.js")
+
+mixin inputGroup(type,value,label,name)
+  div.input-group
+    label(for=name)=label
+    input.form-control(type=type,name=name,value=value)
+    if block
+        block
+
+mixin textGroup(type,value,label,name)
+  div.input-group
+    label(for=name)=label
+    textarea.form-control(name=name) #{value}
+    if block
+        block
+
+mixin imageGroup(value,label,name,bAdd)
+  div.imageGroup
+    +inputGroup('file',value,label,name)
+    if block
+        block
+    if bAdd
+      button.add.projectImage.btn.btn-info.btn-sm(type="button")="Add Image"

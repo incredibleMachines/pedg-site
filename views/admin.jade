@@ -1,0 +1,167 @@
+extends layout
+
+block content
+  #admin.container
+    #featured.row
+      h1="featured"
+        span.btn-group
+          button.btn.btn-link.btn-xs.disabled(type="button") Total: #{data.featured.length}
+          button.add.featured.btn.btn-primary.btn-xs(type="button",data-toggle="modal",data-target="#featured-add") Add
+          button.btn.btn-info.btn-xs.toggle(type="button") Hide
+      +dataGroup('featured',data.featured)
+
+    #portfolio.row
+      h1="Portfolio"
+        span.btn-group
+          button.btn.btn-link.btn-xs.disabled(type="button") Total: #{data.projects.length}
+          button.add.portfolio.btn.btn-primary.btn-xs(type="button",data-toggle="modal",data-target="#portfolio-add") Add
+          button.btn.btn-info.btn-xs.toggle(type="button") Hide
+      +dataGroup('projects',data.projects)
+
+    #process.row
+      h1="Process"
+        span.btn-group
+          button.btn.btn-link.btn-xs.disabled(type="button") Total: #{data.process.length}
+          button.add.process.btn.btn-primary.btn-xs(type="button",data-toggle="modal",data-target="#process-add") Add
+          button.btn.btn-info.btn-xs.toggle(type="button") Hide
+      +dataGroup('process',data.process)
+
+    #testimonials.row
+      h1="Testimonials"
+        span.btn-group
+          button.btn.btn-link.btn-xs.disabled(type="button") Total: #{data.testimonials.length}
+          button.add.testimonials.btn.btn-primary.btn-xs(type="button",data-toggle="modal",data-target="#testimonials-add") Add
+          button.btn.btn-info.btn-xs.toggle(type="button") Hide
+
+      +dataGroup('testimonials',data.testimonials)
+
+    script(src="/javascripts/admin.js")
+    #testimonials-add.modal.fade(tabindex="-1",role="dialog")
+      .modal-dialog
+        .modal-content
+          div.modal-header
+            button.close.glyphicon.glyphicon-remove(data-dismiss="modal")
+            h3 Add New Testimonial
+          form.add.testimonials.modal-body(action="/admin/testimonials",method="post", enctype="multipart/form-data")
+            +inputGroup("text","Add A Name", "Person's Name", "name")
+            +inputGroup("text","Add A Title", "Person's Title", "title")
+            +inputGroup("text","Add A Quote", "Quote", "text")
+            +inputGroup("file","Add An Image", "Background", "background")
+            +inputGroup("file","Add A Logo", "Company Logo", "logo")
+            button.btn.btn-primary.btn-sm(type="submit")="Submit Testimonial Item"
+          .modal-footer
+    #process-add.modal.fade(tabindex="-1",role="dialog")
+      .modal-dialog
+        .modal-content
+          div.modal-header
+            button.close.glyphicon.glyphicon-remove(data-dismiss="modal")
+            h3 Add New Process
+          form.add.process.modal-body(action="/admin/process",method="post", enctype="multipart/form-data")
+            +inputGroup("text","Add A Title", "Process Title", "title")
+            +textGroup("text","Add A Description", "Process Description", "description")
+            +inputGroup("file","Add An Image", "Process Image", "image")
+            +inputGroup("file","Add An Icon", "Process Icon", "icon")
+            button.btn.btn-primary.btn-sm(type="submit")="Submit Process Item"
+          .modal-footer
+    #portfolio-add.modal.fade(tabindex="-1",role="dialog")
+      .modal-dialog
+        .modal-content
+          div.modal-header
+            button.close.glyphicon.glyphicon-remove(data-dismiss="modal")
+            h3 Add New Project
+          form.add.portfolio.modal-body(action="/admin/projects",method="post", enctype="multipart/form-data")
+            +inputGroup("text","Add A Title", "Project Title", "title")
+            +textGroup("text","Add A Description", "Project Description", "description")
+            +inputGroup("text","Add A Role", "Project Role", "role")
+            +inputGroup("text","Add A Location", "Project Location", "location")
+            +inputGroup("text","Add A Date(s)", "Project Dates", "dates")
+            +inputGroup("file", "Add A Thumbnail Image", "Project Thumbnail", "thumbnail")
+            +imageGroup("Add A Project Image", "Project Image(s)","images",true)
+            button.btn.btn-primary.btn-sm(type="submit")="Submit Portfolio Item"
+          .modal-footer
+    #featured-add.modal.fade(tabindex="-1",role="dialog")
+      .modal-dialog
+        .modal-content
+          div.modal-header
+            button.close.glyphicon.glyphicon-remove(data-dismiss="modal")
+            h3 Add New Featured
+          form.add.featured.modal-body(action="/admin/featured",method="post", enctype="multipart/form-data")
+            +inputGroup("text","Add A Title", "featured Title", "title")
+            +inputGroup("text","Add A Video URL", "featured Video", "url")
+            +inputGroup("text","Add A Text Callout","featured Text", "text")
+            button.btn.btn-primary.btn-sm(type="submit")="Submit featured Item"
+          .modal-footer
+
+
+
+
+
+
+
+//-----------------------------------
+//------------- MIXINS --------------
+//-----------------------------------
+
+mixin inputGroup(type,placeholder,label,name)
+  div.input-group
+    label(for=name)=label
+    input.form-control(type=type,name=name,placeholder=placeholder)
+
+mixin textGroup(type,placeholder,label,name)
+  div.input-group
+    label(for=name)=label
+    textarea.form-control(name=name,placeholder=placeholder)
+
+mixin imageGroup(placeholder,label,name,bAdd)
+  div.imageGroup
+    +inputGroup('file',placeholder,label,name)
+    if bAdd
+      button.add.projectImage.btn.btn-primary.btn-sm(type="button")="Add Image"
+
+mixin dataGroup(name,collection)
+    - var keys = []
+    unless collection.length < 1
+      table.table.table-striped.table-hover
+        thead
+          tr
+            th="#"
+            -each val,index in collection[0]
+              unless index =='_id' || index=='slug'
+                -keys.push(index)
+                th=index
+            th(width="10%")='Actions'
+        tbody
+          -each _item, _num in collection
+            tr(class=_item.slug,data-id=_item._id)
+              td=_num+1
+              //-each val, index in _item
+              //this code uses keys from the first db item to populate all info
+              -each index in keys
+                case index
+                  when '_id'
+                    =''
+                  when 'slug'
+                    =''
+                  when 'url'
+                    td
+                      a(href=_item[index])=_item[index]
+                  when 'background'
+                  when 'logo'
+                  when 'icon'
+                  when 'thumbnail'
+                  when 'image'
+                  when 'images'
+                    td
+                      -if(Array.isArray(_item[index]))
+                        ul
+                          -each img in _item[index]
+                            li
+                              img(src=img,class=index)
+                      -else
+                        img(src=_item[index],class=index)
+                  default
+                    td=_item[index]
+              td
+                .btn-group
+                  a.btn.btn-default.btn-xs(href="/admin/"+name+"/"+_item.slug,role='button')="Edit"
+                  a.btn.btn-danger.btn-xs.delete(href="/admin/"+name+"/"+_item.slug+"/delete",role='button')="Delete"

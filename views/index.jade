@@ -1,0 +1,199 @@
+extends main
+
+block nav
+  nav#header
+    ul
+      li
+        a(data-scroll,href="#featured") Home
+      li
+        a(data-scroll,href="#about") About
+      li
+        a(data-scroll,href="#portfolio") Portfolio
+      li#branding
+      li
+        a(data-scroll,href="") Reel
+      li
+        a(data-scroll,href="#clients") Clients
+      li
+        a(data-scroll,href="#contact") Contact
+
+block featured
+  a(name="top")
+  #featured
+    ul
+      li
+        +image('holder.js/100%x100%/sky/',"Text", false )
+
+block about
+  a(name='about')
+  section#about
+    p.callout="A versatile group of innovators dedicated to creating unique environments for any size event. Trusting the project to lead the product, we focus on preserving the true spirit and motivation behind your biggest ideas. From inception to showtime expect uncommon care."
+    #services
+      h1="In-House Services"
+        span.line
+      p="We are poised to work with you to provide the suite of services that fit your needs."
+      ul.all-services
+        li.produce
+          ul.services
+            li.img
+            li.head produce
+            li show
+            li creative
+            li technical
+            li content
+        li.direct
+          ul.services
+            li.img
+            li.head direct
+            li show
+            li creative
+            li technical
+            li lighting
+        li.design
+          ul.services
+            li.img
+            li.head design
+            li stage
+            li scenic
+            li video
+            li lighting
+            li decor
+        li.model
+          ul.services
+            li.img
+            li.head model
+            li hand sketches
+            li storyboards
+            li 2d drafting
+            li 3d modeling
+            li animation
+        li.light
+          ul.services
+            li.img
+            li.head light
+            li design
+            li previsualization
+            li programming
+            li direction
+
+    section#process
+      h1="Process"
+        span.line
+      p="We believe that process is paramount. We have distilled ours into six distinct phases."
+      ul.icons
+        each val,index in data.process
+          li
+            img(src=val.icon)
+          unless index == data.process.length-1
+            li
+              img(src="/images/pointing_arrow.png")
+      section.slideshow
+        each val,index in data.process
+          +process(val)
+
+block portfolio
+  a(name='portfolio')
+  section#portfolio
+    h1="Portfolio"
+      span.line
+    .active(style="display:none")
+      button.close.glyphicon.glyphicon-remove
+      #project-featured
+
+      #project-desc
+        .details
+          article.event
+            h5="Event:"
+            p
+          article.role
+            h5="Role:"
+            p
+          article.location
+            h5="Location:"
+            p
+          article.dates
+            h5="Date(s):"
+            p
+        .desc
+          p
+    p.hero
+      img(src="images/featured_image.png")
+    ul.projects
+      each val in data.projects
+        +project(val)
+
+
+
+block history
+  a(name='history')
+  section#history
+    .right-bg
+    .left-bg
+    h1="Our History"
+      span.line
+    p Independently established lighting designers Spike Brant and Justin Collie first began working together in 1987. As technicians with Def Leppard and The Cure, and ultimately collaborating as designers for Korn, the duo began to realize their style and drive were complimented when working together and decided to form an alliance that became known as ‘ARTFAG’.
+    p Over the next decade, Spike and Justin began evolving their technique, reaching beyond lighting design and programming. They envisioned events from every angle, and found ways to contribute to the spirit of the production as a whole. Coining the term ‘PERFORMANCE ENVIRONMENT DESIGN’, the pair’s all encompassing detail driven approach caught on. The ‘GROUP’ has evolved from their detailed attention to event culture and is now a collaboration of many skilled technicians and artists.
+
+
+block testimonials
+  a(name='testimonials')
+  section#testimonials
+    each val in data.testimonials
+      +testimonial(val)
+
+block clients
+  a(name='clients')
+  section#clients
+    h1="Clients"
+      span.line
+
+block contact
+  a(name='contact')
+  section#contact
+    p.phone="+1 (717) 435-8544"
+    p.email="INFO@PEDG.NET"
+    p.address="533 Janet Avenue"
+    p.address="Lancaster,PA 17601"
+    ul.social
+      a(href="http://twitter.com/PEDG22", target="_blank")
+        li.twitter
+      a(href="http://www.facebook.com/PEDGLLC", target="_blank")
+        li.facebook
+      a(href="http://vimeo.com", target="_blank")
+        li.vimeo
+      a(href="https://www.linkedin.com/company/1557831", target="_blank")
+        li.linkedin
+    a.backtotop(data-scroll, href="#featured")
+
+//Mixin's
+mixin image(src,text,background)
+  figure
+    if background
+      .background
+    figcaption=text
+    img(src=src,data-src=src)
+
+mixin project(_project)
+    li.project(class=_project.slug)
+      a.project(data-scroll, href='#portfolio', data-slug=_project.slug)
+        +image(_project.thumbnail, _project.title, true )
+
+mixin testimonial(_test)
+    article.testimonial
+      img.branding(src=_test.logo)
+      p.quote
+        span.left &ldquo;
+        span.text #{_test.text}
+        span.name #{_test.name}
+          span.title #{_test.title}
+        span.right &rdquo;
+      figure.tint
+        img.background(src=_test.background)
+
+mixin process(_process)
+      article.process-single
+        section.left
+          img(src=_process.image)
+        section.right
+          h4 #{_process.title}
+          p #{_process.description}
