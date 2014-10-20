@@ -9,7 +9,11 @@ function init(){
   //console.log(nav.offsetHeight)
   //console.log(window.innerHeight)
   window.onscroll = navCheck;
-  window.onresize = pageResize //setfeaturedHeight(window.innerHeight)
+  window.onresize = function(){
+                      pageResize() //setfeaturedHeight(window.innerHeight)
+                      setfeaturedHeight(window.innerHeight)
+                      userResize()
+  }
   setfeaturedHeight(window.innerHeight)
 
   //setupScroll
@@ -38,8 +42,7 @@ function init(){
 
   //VIDEO PLAYER
   $('.video-js').css('position','absolute')
-
-  videojs("video-1").ready(function(){
+  videojs("video-1",{width:window.innerWidth, height: window.innerHeight}).ready(function(){
 	  myPlayer = this
   	sH = window.innerHeight,
 	  sW = window.innerWidth
@@ -52,7 +55,7 @@ function init(){
     myPlayer.controls(false);
   })
 
-  window.addEventListener('resize', userResize, false);
+  //window.addEventListener('resize', userResize, false);
 }
 
 /* Front-End Modifications */
@@ -138,12 +141,12 @@ function hasClass(element,cls){
 //VIDEO
 function userResize(){
 	if(window.innerHeight<window.innerWidth*(1/aspect)){
-  	myPlayer.dimensions(window.innerWidth,window.innerWidth*(1/aspect));
+    myPlayer.dimensions(window.innerWidth,window.innerHeight)
   	$('#video-1').css("left",0);
   	$('#video-1').css("top",(window.innerHeight-myPlayer.height())/2);
 	}
 	else{
-	 myPlayer.dimensions(window.innerHeight*aspect,window.innerHeight);
+   myPlayer.dimensions(window.innerWidth*aspect,window.innerHeight);
 	 $('#video-1').css("top",0);
 	 $('#video-1').css("left",(window.innerWidth-myPlayer.width())/2);
 	}
