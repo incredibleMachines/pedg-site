@@ -1,7 +1,9 @@
 
 var nav, featured
-var aspect=16/9
+var aspect=16/9, videoIndex=0
 var myPlayer
+
+var videoPlay=["http://player.vimeo.com/external/77705083.hd.mp4?s=8b1c0a07e267f56b853cd1496e5b6a02","http://player.vimeo.com/external/74880182.hd.mp4?s=9f183b81821170e8fd279c89f55cf021","http://player.vimeo.com/external/77457100.hd.mp4?s=8ccf2b3c4d0af1c04ca48ea87335f154"]
 
 function init(){
   nav = document.getElementById('header')
@@ -47,12 +49,13 @@ function init(){
   	sH = window.innerHeight,
 	  sW = window.innerWidth
     myPlayer.src([
-	  		{ type: "video/mp4", src: "http://player.vimeo.com/external/77705083.hd.mp4?s=8b1c0a07e267f56b853cd1496e5b6a02" },
+	  		{ type: "video/mp4", src: videoPlay[videoIndex] },
 	 		 // { type: "video/ogg", src: "/videos/homepage/"+videoPlay[videoIndex].ogv }
 		])
     myPlayer.volume(0)
     userResize();
     myPlayer.controls(false);
+    myPlayer.on('ended',playNext);
   })
 
   //window.addEventListener('resize', userResize, false);
@@ -133,6 +136,16 @@ function beforeScroll(toggle,anchor){
 $('.active .close').click(function(e){
   $('.active').hide();
 })
+
+$('#featured #nav-left').click(function(e){
+  playPrev()
+})
+
+$('#featured #nav-right').click(function(e){
+  playNext()
+})
+
+
 function hasClass(element,cls){
   return (' ' + element.className + ' ').indexOf(' ' + cls + ' ') > -1;
 }
@@ -140,19 +153,51 @@ function hasClass(element,cls){
 
 //VIDEO
 function userResize(){
-	if(window.innerHeight<window.innerWidth*(1/aspect)){
-    myPlayer.dimensions(window.innerWidth,window.innerHeight)
-  	$('#video-1').css("left",0);
-  	$('#video-1').css("top",(window.innerHeight-myPlayer.height())/2);
+  var width=window.innerWidth
+  var height=window.innerHeight-$('#header').height()
+  $('#featured').css({
+    width:width,
+    height:height,
+    overflow:'hidden'
+  })
+  $('#about').css({
+    'padding-top':window.innerHeight
+  })
+	 if(height<width*(1/aspect)){
+	  	myPlayer.dimensions(width,width*(1/aspect))
+	  	$('#video-1').css("left",0)
+	  	$('#video-1').css("top",(height-myPlayer.height())/2)
 	}
 	else{
-   myPlayer.dimensions(window.innerWidth*aspect,window.innerHeight);
-	 $('#video-1').css("top",0);
-	 $('#video-1').css("left",(window.innerWidth-myPlayer.width())/2);
+	   myPlayer.dimensions(height*aspect,height);
+	   $('#video-1').css("top",0);
+	   $('#video-1').css("left",(width-myPlayer.width())/2);
 	}
+}
 
-	$('.intro-vid').css("height",myPlayer.height()+parseInt($('#intro-video-1').css('top')));
-	$('.intro-vid').css("width",window.innerWidth);
-	sH = window.innerHeight;
-	sW = window.innerWidth;
+function playNext(){
+  $('#video-1').fadeOut('slow', function(){
+  	videoIndex++;
+  	if(videoIndex>videoPlay.length-1){
+  		videoIndex=0;
+  	}
+  	myPlayer.src([
+      { type: "video/mp4", src: videoPlay[videoIndex] },
+    ])
+    $('#video-1').fadeIn('slow',function(){})
+ })
+}
+
+function playPrev(){
+
+$('#video-1').fadeOut('slow', function(){
+  videoIndex--;
+  if(videoIndex<0){
+    videoIndex=videoPlay.length-1;
+  }
+  myPlayer.src([
+    { type: "video/mp4", src: videoPlay[videoIndex] },
+  ])
+  $('#video-1').fadeIn('slow',function(){})
+})
 }
