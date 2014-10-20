@@ -1,5 +1,8 @@
 
 var nav, featured
+var aspect=16/9
+var myPlayer
+
 function init(){
   nav = document.getElementById('header')
   featured = document.getElementById('featured')
@@ -33,6 +36,23 @@ function init(){
   })
 
 
+  //VIDEO PLAYER
+  $('.video-js').css('position','absolute')
+
+  videojs("video-1").ready(function(){
+	  myPlayer = this
+  	sH = window.innerHeight,
+	  sW = window.innerWidth
+    myPlayer.src([
+	  		{ type: "video/mp4", src: "http://player.vimeo.com/external/77705083.hd.mp4?s=8b1c0a07e267f56b853cd1496e5b6a02" },
+	 		 // { type: "video/ogg", src: "/videos/homepage/"+videoPlay[videoIndex].ogv }
+		])
+    myPlayer.volume(0)
+    userResize();
+    myPlayer.controls(false);
+  })
+
+  window.addEventListener('resize', userResize, false);
 }
 
 /* Front-End Modifications */
@@ -112,4 +132,24 @@ $('.active .close').click(function(e){
 })
 function hasClass(element,cls){
   return (' ' + element.className + ' ').indexOf(' ' + cls + ' ') > -1;
+}
+
+
+//VIDEO
+function userResize(){
+	if(window.innerHeight<window.innerWidth*(1/aspect)){
+  	myPlayer.dimensions(window.innerWidth,window.innerWidth*(1/aspect));
+  	$('#video-1').css("left",0);
+  	$('#video-1').css("top",(window.innerHeight-myPlayer.height())/2);
+	}
+	else{
+	 myPlayer.dimensions(window.innerHeight*aspect,window.innerHeight);
+	 $('#video-1').css("top",0);
+	 $('#video-1').css("left",(window.innerWidth-myPlayer.width())/2);
+	}
+
+	$('.intro-vid').css("height",myPlayer.height()+parseInt($('#intro-video-1').css('top')));
+	$('.intro-vid').css("width",window.innerWidth);
+	sH = window.innerHeight;
+	sW = window.innerWidth;
 }
