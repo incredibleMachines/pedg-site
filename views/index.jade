@@ -20,6 +20,7 @@ block nav
 block featured
   a(name="top")
   #featured
+    #text
     video#video-1.video-js.featured-video(preload='auto',autoplay)
     #nav-left
     #nav-right
@@ -118,7 +119,7 @@ block portfolio
         .desc
           p
     p.hero
-      img(src="images/featured_image.png")
+      img(src=data.hero[0].image)
     ul.projects
       each val in data.projects
         +project(val)

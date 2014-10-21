@@ -10,4 +10,17 @@ block content
     block testimonials
     block clients
     block contact
+    script
+      -var videoLinks = []
+      -var videoText = []
+      -each val in data.featured
+          //-#{JSON.stringify(val)}
+          -videoLinks.push(val.url)
+          -videoText.push(val.text)
+      !="var videoPlay ="
+      !{JSON.stringify(videoLinks)}
+      !=";\n\r"
+      !="var videoText ="
+      !{JSON.stringify(videoText)}
+      !=";"
     script(src="/javascripts/main.js")

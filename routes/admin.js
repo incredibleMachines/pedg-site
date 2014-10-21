@@ -15,7 +15,7 @@ var debug = require('debug')('Admin')
     collections = null
     //passport = null
 
-router.all('*',ensureAuthenticated)
+/*router.all('*',ensureAuthenticated)
 function ensureAuthenticated(req, res, next) {
   mongodb =  mongodb || req.app.get('mongodb')
   mongodb.getAll('users',function(e,doc){
@@ -23,7 +23,7 @@ function ensureAuthenticated(req, res, next) {
     else if(req.isAuthenticated()) return next()
     else return res.redirect('/login')
   })
-}
+}*/
 
 /*Check for valid types only*/
 router.use('/:type',function(req, res, next) {
@@ -174,9 +174,12 @@ router.post('/:type',function(req,res){
   var slug = req.params.slug
 
   var post = req.body
+  //check if the body parser is empty
+  //if so we have a multipart form
+  //
+  if(!_.isEmpty(post)){
+    debug('Body Parser Has Form')
 
-  if(post){
-    debug('POST')
     debug(inspect(post))
 
     mongodb.add(type,post,function(e,_doc){
@@ -184,11 +187,11 @@ router.post('/:type',function(req,res){
       else res.redirect('/admin')
     })
   }else{
+    debug('Multiparty Has Form')
     var form = new multiparty.Form({uploadDir:process.cwd()+'/tmp'});
     form.parse(req, function(err, fields, files) {
         if(err) debug(err)
         var obj = {fields: fields, files: files}
-        //debug(inspect(obj))
 
         //handle files
         //handle fields

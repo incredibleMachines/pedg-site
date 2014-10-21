@@ -21,6 +21,8 @@ var collections = { projects:null,
                     testimonials:null,
                     featured:null,
                     process:null,
+                    /*clients:null,*/
+                    hero:null,
                     users:null }
 
 
@@ -77,7 +79,7 @@ app.use(cookieParser());
 app.use(require('less-middleware')(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(session({
-  secret: 'keyboardcat',
+  secret: '___________',
   //cookie: { maxAge: 600000 },
   resave: true,
   saveUninitialized: true

@@ -17,7 +17,13 @@ block content
           button.add.portfolio.btn.btn-primary.btn-xs(type="button",data-toggle="modal",data-target="#portfolio-add") Add
           button.btn.btn-info.btn-xs.toggle(type="button") Hide
       +dataGroup('projects',data.projects)
-
+    #hero.row
+      h1="Portfolio Hero"
+        span.btn-group
+          button.btn.btn-link.btn-xs.disabled(type="button") Total: #{data.hero.length}
+          button.add.portfolio.btn.btn-primary.btn-xs(type="button",data-toggle="modal",data-target="#hero-add") Add
+          button.btn.btn-info.btn-xs.toggle(type="button") Hide
+      +dataGroup('hero',data.hero)
     #process.row
       h1="Process"
         span.btn-group
@@ -34,8 +40,16 @@ block content
           button.btn.btn-info.btn-xs.toggle(type="button") Hide
 
       +dataGroup('testimonials',data.testimonials)
+    //- this is commented out
+    //- #clients.row
+        h1="Clients"
+          span.btn-group
+            button.btn.btn-link.btn-xs.disabled(type="button") Total: #{data.clients.length}
+            button.add.testimonials.btn.btn-primary.btn-xs(type="button",data-toggle="modal",data-target="#clients-add") Add
+            button.btn.btn-info.btn-xs.toggle(type="button") Hide
 
-    script(src="/javascripts/admin.js")
+        +dataGroup('clients',data.clients)
+
     #testimonials-add.modal.fade(tabindex="-1",role="dialog")
       .modal-dialog
         .modal-content
@@ -91,7 +105,30 @@ block content
             +inputGroup("text","Add A Text Callout","featured Text", "text")
             button.btn.btn-primary.btn-sm(type="submit")="Submit featured Item"
           .modal-footer
-
+    #hero-add.modal.fade(tabindex="-1",role="dialog")
+      .modal-dialog
+        .modal-content
+          div.modal-header
+            button.close.glyphicon.glyphicon-remove(data-dismiss="modal")
+            h3 Add New Client
+          form.add.featured.modal-body(action="/admin/hero",method="post", enctype="multipart/form-data")
+            +inputGroup("text","Add A Title", "Hero Title", "title")
+            +imageGroup("Add A Hero Image", "Hero Image","image",false)
+            button.btn.btn-primary.btn-sm(type="submit")="Submit Hero Image"
+          .modal-footer
+    //- this is also commented out
+    //-#clients-add.modal.fade(tabindex="-1",role="dialog")
+      .modal-dialog
+        .modal-content
+          div.modal-header
+            button.close.glyphicon.glyphicon-remove(data-dismiss="modal")
+            h3 Add New Client
+          form.add.featured.modal-body(action="/admin/clients",method="post", enctype="multipart/form-data")
+            +inputGroup("text","Add A Title", "Client Title", "title")
+            +imageGroup("Add A Project Image", "Project Image(s)","images",false)
+            button.btn.btn-primary.btn-sm(type="submit")="Submit Client"
+          .modal-footer
+    script(src="/javascripts/admin.js")
 
 
 
@@ -120,7 +157,9 @@ mixin imageGroup(placeholder,label,name,bAdd)
 
 mixin dataGroup(name,collection)
     - var keys = []
-    unless collection.length < 1
+    if collection.length < 1
+      h5 No #{name} content added yet.
+    else
       table.table.table-striped.table-hover
         thead
           tr
