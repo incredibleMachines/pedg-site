@@ -2,6 +2,11 @@ extends main
 
 block nav
   nav#header
+    #mobile-branding
+    #mobile-expand
+      .line
+      .line
+      .line
     ul
       li
         a(data-scroll,href="#featured") Home
@@ -16,6 +21,7 @@ block nav
         a(data-scroll,href="#clients") Clients
       li
         a(data-scroll,href="#contact") Contact
+
 
 block featured
   a(name="top")
@@ -129,12 +135,15 @@ block portfolio
 block history
   a(name='history')
   section#history
-    .right-bg
-    .left-bg
+    .right-bg-1
+    .right-bg-2
+    .left-bg-1
+    .left-bg-2
     h1="Our History"
       span.line
-    p Independently established lighting designers Spike Brant and Justin Collie first began working together in 1987. As technicians with Def Leppard and The Cure, and ultimately collaborating as designers for Korn, the duo began to realize their style and drive were complimented when working together and decided to form an alliance that became known as ‘ARTFAG’.
-    p Over the next decade, Spike and Justin began evolving their technique, reaching beyond lighting design and programming. They envisioned events from every angle, and found ways to contribute to the spirit of the production as a whole. Coining the term ‘PERFORMANCE ENVIRONMENT DESIGN’, the pair’s all encompassing detail driven approach caught on. The ‘GROUP’ has evolved from their detailed attention to event culture and is now a collaboration of many skilled technicians and artists.
+    section.text
+      p Independently established lighting designers Spike Brant and Justin Collie first began working together in 1987. As technicians with Def Leppard and The Cure, and ultimately collaborating as designers for Korn, the duo began to realize their style and drive were complimented when working together and decided to form an alliance that became known as ‘ARTFAG’.
+      p Over the next decade, Spike and Justin began evolving their technique, reaching beyond lighting design and programming. They envisioned events from every angle, and found ways to contribute to the spirit of the production as a whole. Coining the term ‘PERFORMANCE ENVIRONMENT DESIGN’, the pair’s all encompassing detail driven approach caught on. The ‘GROUP’ has evolved from their detailed attention to event culture and is now a collaboration of many skilled technicians and artists.
 
 
 block testimonials
