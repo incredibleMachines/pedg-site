@@ -19,6 +19,9 @@ function init(){
   setfeaturedHeight(window.innerHeight)
 
   //setupScroll
+  //fix ul main nav
+
+  $('#featured ul.slidesjs-pagination').css('margin-left',"-"+($('#featured ul.slidesjs-pagination').innerWidth()/2)+"px")
 
   smoothScroll.init({
     speed: 1750, // Integer. How fast to complete the scroll in milliseconds
@@ -219,7 +222,6 @@ function userResize(){
   else{
     $('#testimonials img.background').css('margin-left',0)
   }
-
   $('#portfolio .active #project-desc').height($('#portfolio .active #project-desc .details').outerHeight())
 }
 
@@ -307,5 +309,7 @@ function populateProject(json,cb){
   })
   $('#project-featured .'+json.slug+" ")
   $('#portfolio .active #project-desc').height($('#portfolio .active #project-desc .details').outerHeight())
+  $('#project-featured .slideshow ul.slidesjs-pagination').css('margin-left',"-"+($('#project-featured .slideshow ul.slidesjs-pagination').innerWidth()/2)+"px")
+
   cb()
 }
