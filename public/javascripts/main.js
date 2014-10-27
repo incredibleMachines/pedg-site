@@ -222,7 +222,19 @@ function userResize(){
   else{
     $('#testimonials img.background').css('margin-left',0)
   }
+  if(width>740){
+    $().hide()
+  }
   $('#portfolio .active #project-desc').height($('#portfolio .active #project-desc .details').outerHeight())
+  if($('#mobile-branding').css('display')=='none'){
+    $('#mobile-expand').removeClass('active')
+    $('#header li').css('display','inline')
+    $('#branding').css('display','inline-block')
+    $('#header').height(111)
+  }
+  else if(!$('#mobile-expand').hasClass('active')){
+    $('#header').height(150)
+  }
 }
 
 function playNext(){
