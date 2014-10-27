@@ -3,11 +3,16 @@ var nav, featured
 var aspect=16/9, videoIndex=0
 var myPlayer
 
+var opts = {speed: 1750, easing: 'easeOutCubic',updateURL: false, offset: 0}
+
+
 //var videoPlay=["http://player.vimeo.com/external/77705083.hd.mp4?s=8b1c0a07e267f56b853cd1496e5b6a02","http://player.vimeo.com/external/74880182.hd.mp4?s=9f183b81821170e8fd279c89f55cf021","http://player.vimeo.com/external/77457100.hd.mp4?s=8ccf2b3c4d0af1c04ca48ea87335f154"]
 
 function init(){
   nav = document.getElementById('header')
   featured = document.getElementById('featured')
+
+  opts.offset = nav.offsetHeight
   //console.log(nav.offsetHeight)
   //console.log(window.innerHeight)
   window.onscroll = navCheck;
@@ -22,8 +27,8 @@ function init(){
   //fix ul main nav
 
   $('#featured ul.slidesjs-pagination').css('margin-left',"-"+($('#featured ul.slidesjs-pagination').innerWidth()/2)+"px")
-
-  smoothScroll.init({
+  $('.hero figcaption').css('margin-left',"-"+($('.hero figcaption').innerWidth()/2)+"px")
+  var _opts = {
     speed: 1750, // Integer. How fast to complete the scroll in milliseconds
     easing: 'easeOutCubic', // Easing pattern to use
     updateURL: false, // Boolean. Whether or not to update the URL with the anchor hash on scroll
@@ -32,7 +37,8 @@ function init(){
     callbackAfter: function ( toggle, anchor ) {
       //console.log(anchor)
     } // Function to run after scrolling */
-  });
+  }
+  smoothScroll.init(_opts);
   $('#testimonials').slidesjs({
     height:240,
     navigation: {active:true,effect:'slide'},
@@ -64,16 +70,16 @@ function init(){
       $('#featured #text').html(videoText[videoIndex])
       $('#featured #text').fadeIn('slow')
     })
-
+    //var opts = {offset: nav.offsetHeight,updateURL:false,easing:'easeOutCubic',speed:1750}
     //once video loads handle page navigation
     if(project != null){
       populateProject(project,function(){
         //smoothScroll.destroy();
-        smoothScroll.animateScroll( null, '#portfolio',{offset: nav.offsetHeight,updateURL:false,easing:'easeOutCubic',speed:1750} );
+        smoothScroll.animateScroll( null, '#active', opts);
       })
     }
     if(page != null){
-      smoothScroll.animateScroll( null, page,{offset: nav.offsetHeight,updateURL:false,easing:'easeOutCubic',speed:1750} );
+      smoothScroll.animateScroll( null, page,opts );
     }
 
   })
@@ -88,6 +94,10 @@ function init(){
       playSelected($this.attr('class'))
     }
     //alert($(this).attr('class'))
+  })
+
+  $('a.project').click(function(){
+    something(this)
   })
 }
 
@@ -118,41 +128,22 @@ function beforeScroll(toggle,anchor){
   //console.log(toggle)
   //console.log(toggle.className)
   //console.log(anchor)
-  //check if we are scrolling to a page or project
-  if(hasClass(toggle,'project')){
-    var slug = toggle.getAttribute('data-slug')
-    var clss = toggle.className
-    console.log(" CLASS NAME: "+clss)
-    console.log(" SlUG: "+slug)
-    //make ajax request and populate page
-    if(window.history.pushState){
-      //console.log(anchor)
-      var val = anchor.replace('#','')
-      window.history.pushState('/'+val+'/'+slug,'/'+val+'/'+slug,'/'+val+'/'+slug)
-    }
-    $.ajax({
-            type:"POST",
-            url:"/portfolio/"+slug,
 
-    }).done(function(json){
-        //console.log(JSON.stringify(json))
-        populateProject(json,function(){})
-    })
+  //history.pushState
+  if(window.history.pushState){
+    //console.log(anchor)
+    var val = anchor.replace('#','')
+    //console.log(val)
+    if(val == 'featured') val =''
+    //if(val == 'active') val = 'portfolio'
 
-  }else{
-    //history.pushState
-    if(window.history.pushState){
-      //console.log(anchor)
-      var val = anchor.replace('#','')
-      //console.log(val)
-      if(val == 'featured') val =''
-      window.history.pushState('/'+val,'/'+val,'/'+val)
-    }
+    if(val != 'active') window.history.pushState('/'+val,'/'+val,'/'+val)
   }
+
 }
 
-$('.active .close-active').click(function(e){
-  $('.active').hide();
+$('#active .close-active').click(function(e){
+  $('#active').hide();
   if(window.history.pushState){
     window.history.pushState('/portfolio','portfolio','/portfolio')
   }
@@ -222,7 +213,7 @@ function userResize(){
   else{
     $('#testimonials img.background').css('margin-left',0)
   }
-  $('#portfolio .active #project-desc').height($('#portfolio .active #project-desc .details').outerHeight())
+  $('#portfolio #active #project-desc').height($('#portfolio #active #project-desc .details').outerHeight())
 }
 
 function playNext(){
@@ -282,15 +273,15 @@ function playSelected(newIndex){
 }
 
 function populateProject(json,cb){
-  console.log(json)
-  $(".active").show()
+  //console.log(json)
+  $("#active").show()
   $('#project-featured .slideshow').remove()
   $("#project-desc .desc p").html(json.description)
   $("#project-desc .details .event p").html(json.title)
   $("#project-desc .details .role p").html(json.role)
   $("#project-desc .details .location p").html(json.location)
   $("#project-desc .details .dates p").html(json.dates)
-  console.log(json.images)
+  //console.log(json.images)
   var div = $('<div>').addClass(json.slug).addClass('slideshow')
   $("#project-featured").prepend(div)
 
@@ -298,7 +289,7 @@ function populateProject(json,cb){
   //$("#project-featured").add('div')
 
   $.each(json.images,function(index,img){
-    console.log(img)
+    //console.log(img)
 
     $("<img>").attr('src',img).appendTo("#project-featured ."+json.slug)
   })
@@ -308,8 +299,31 @@ function populateProject(json,cb){
     navigation: {active:true,effect:'slide'}
   })
   $('#project-featured .'+json.slug+" ")
-  $('#portfolio .active #project-desc').height($('#portfolio .active #project-desc .details').outerHeight())
+  $('#portfolio #active #project-desc').height($('#portfolio #active #project-desc .details').outerHeight())
   $('#project-featured .slideshow ul.slidesjs-pagination').css('margin-left',"-"+($('#project-featured .slideshow ul.slidesjs-pagination').innerWidth()/2)+"px")
 
   cb()
+}
+
+function something(toggle){
+  var slug = toggle.getAttribute('data-slug')
+  var clss = toggle.className
+  //console.log(" CLASS NAME: "+clss)
+  //console.log(" SlUG: "+slug)
+  //make ajax request and populate page
+  if(window.history.pushState){
+    //console.log(anchor)
+    var val = 'portfolio'
+    window.history.pushState('/'+val+'/'+slug,'/'+val+'/'+slug,'/'+val+'/'+slug)
+  }
+  $.ajax({
+          type:"POST",
+          url:"/portfolio/"+slug,
+
+  }).done(function(json){
+      //console.log(JSON.stringify(json))
+      populateProject(json,function(){
+        smoothScroll.animateScroll( null, '#active', opts);
+      })
+  })
 }

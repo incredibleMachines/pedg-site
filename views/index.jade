@@ -111,7 +111,7 @@ block portfolio
   section#portfolio
     h1="Portfolio"
       span.line
-    .active(style="display:none")
+    #active(style="display:none")
       div.close-active
       #project-featured
         #project-desc
@@ -131,8 +131,8 @@ block portfolio
           .desc
             p
 
-    p.hero
-      img(src=data.hero[0].image)
+    div.hero
+      +image(data.hero[0].image,"Featured",true)
     ul.projects
       each val in data.projects
         +project(val)
@@ -152,13 +152,11 @@ block history
       p Over the next decade, Spike and Justin began evolving their technique, reaching beyond lighting design and programming. They envisioned events from every angle, and found ways to contribute to the spirit of the production as a whole. Coining the term ‘PERFORMANCE ENVIRONMENT DESIGN’, the pair’s all encompassing detail driven approach caught on. The ‘GROUP’ has evolved from their detailed attention to event culture and is now a collaboration of many skilled technicians and artists.
 
 
-block testimonials
-  section#testimonials
-    each val in data.testimonials
-      +testimonial(val)
-
 block clients
   section#clients
+    section#testimonials
+      each val in data.testimonials
+        +testimonial(val)
     h1="Clients"
       span.line
     ul.clients
@@ -195,7 +193,7 @@ mixin client(_client)
       +image(_client.image,'',false)
 mixin project(_project)
     li.project(class=_project.slug)
-      a.project(data-scroll, href='#portfolio', data-slug=_project.slug)
+      a.project(data-slug=_project.slug)
         +image(_project.thumbnail, _project.title, true )
 
 mixin testimonial(_test)

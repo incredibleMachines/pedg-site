@@ -502,16 +502,49 @@ div{width:100%; height:auto;}
     }
   }
   //PORTFOLIO
-  p.hero{
+.hero{
     width: 90%;
     max-width:1280px;
+    height: 227px;
     margin: 0 auto;
-    img{
-      position: relative;
+    position: relative;
+    figure{
+      position: absolute;
       width: 100%;
       height: 100%;
-      //max-height:227px;
       overflow:hidden;
+      .background{
+        display:none;
+        position:absolute;
+        width: 100%;
+        height: 100%;
+        background-color: #000;
+        opacity: 0.5;
+      }
+      figcaption{
+        display:none;
+        position: absolute;
+        left: 50%;
+        top:50%;
+        text-transform: uppercase;
+        color: @white;
+        font-family:'geometria_bold', helvetica,sans-serif;
+        font-weight: bold;
+        font-size: 2em;
+      }
+      img{
+        width: 100%;
+        height: auto;
+        //max-height:227px;
+      }
+    }
+  }
+  .hero:hover{
+    figure{
+      .background, figcaption{
+        display:block;
+      }
+
     }
   }
   #portfolio{
@@ -521,7 +554,7 @@ div{width:100%; height:auto;}
       padding-bottom:20px;
       margin-top:-20px;
     }
-    .active{
+    #active{
       width: 80%;
       margin: 0 auto;
       position: relative;
@@ -545,12 +578,12 @@ div{width:100%; height:auto;}
             padding: 20px;
           }
           .slidesjs-next{
-            top: 50%;
+            bottom: 60%;
             left: 100%;
             background:url('../images/right_arrow.png') center no-repeat;
           }
           .slidesjs-previous{
-            top: 50%;
+            bottom: 60%;
             right: 100%;
             background:url('../images/left_arrow.png') center no-repeat;
           }
@@ -603,7 +636,7 @@ div{width:100%; height:auto;}
         .details{
           width: 50%;
           height: 100%;
-          padding: 15px 20px;
+          padding: 12px 20px;
           position: relative;
           float: left;
           border-right: 1px solid @solidgray;
@@ -659,13 +692,13 @@ div{width:100%; height:auto;}
     }
     .project, .client{
       position:relative;
-      width: 250px;
+      //width: 250px;
       display: inline-table;
-      margin: 10px 0;
+      margin: 10px 10px;
       figure{
-        position: relative;
+        position: absolute;
         height: auto;
-        display: inline-block;
+        overflow:hidden;
         .background{
           display:none;
           position:absolute;
@@ -687,8 +720,21 @@ div{width:100%; height:auto;}
           font-weight: bold;
           opacity: 1;
         }
+        img{
+          width: 100%;
+          height: auto;
+        }
+
       }
 
+    }//.project,.client
+    .project,.project figure{
+      width:250px;
+      height: 250px;
+    }
+    .client,.client figure{
+      width: 140px;
+      height: 140px;
     }
   }
   //Testimonial
