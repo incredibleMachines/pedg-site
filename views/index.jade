@@ -24,16 +24,24 @@ block nav
 
 
 block featured
-  a(name="top")
   #featured
     #text
+    ul.slidesjs-pagination
+      -var c = 0
+      -each val in data.featured
+        -c++
+        li.slidesjs-pagination-item
+          unless c == 1
+            a(class=c-1) #{val.text}
+          else
+            a.active(class=c-1) #{val.text}
+
     video#video-1.video-js.featured-video(preload='auto',autoplay)
     #nav-left
     #nav-right
 
 
 block about
-  a(name='about')
   section#about
     p.callout="A versatile group of innovators dedicated to creating unique environments for any size event. Trusting the project to lead the product, we focus on preserving the true spirit and motivation behind your biggest ideas. From inception to showtime expect uncommon care."
     #services
@@ -100,30 +108,29 @@ block about
           +process(val)
 
 block portfolio
-  a(name='portfolio')
   section#portfolio
     h1="Portfolio"
       span.line
     .active(style="display:none")
-      button.close.glyphicon.glyphicon-remove
+      div.close-active
       #project-featured
+        #project-desc
+          .details
+            article.event
+              h5="Event:"
+              p
+            article.role
+              h5="Role:"
+              p
+            article.location
+              h5="Location:"
+              p
+            article.dates
+              h5="Date(s):"
+              p
+          .desc
+            p
 
-      #project-desc
-        .details
-          article.event
-            h5="Event:"
-            p
-          article.role
-            h5="Role:"
-            p
-          article.location
-            h5="Location:"
-            p
-          article.dates
-            h5="Date(s):"
-            p
-        .desc
-          p
     p.hero
       img(src=data.hero[0].image)
     ul.projects
@@ -133,7 +140,6 @@ block portfolio
 
 
 block history
-  a(name='history')
   section#history
     .right-bg-1
     .right-bg-2
@@ -147,19 +153,19 @@ block history
 
 
 block testimonials
-  a(name='testimonials')
   section#testimonials
     each val in data.testimonials
       +testimonial(val)
 
 block clients
-  a(name='clients')
   section#clients
     h1="Clients"
       span.line
+    ul.clients
+      each val in data.clients
+        +client(val)
 
 block contact
-  a(name='contact')
   section#contact
     p.phone="+1 (717) 435-8544"
     p.email="INFO@PEDG.NET"
@@ -184,6 +190,9 @@ mixin image(src,text,background)
     figcaption=text
     img(src=src,data-src=src)
 
+mixin client(_client)
+    li.client()
+      +image(_client.image,'',false)
 mixin project(_project)
     li.project(class=_project.slug)
       a.project(data-scroll, href='#portfolio', data-slug=_project.slug)

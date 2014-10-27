@@ -25,10 +25,11 @@ function init(){
     easing: 'easeOutCubic', // Easing pattern to use
     updateURL: false, // Boolean. Whether or not to update the URL with the anchor hash on scroll
     offset: nav.offsetHeight, // Integer. How far to offset the scrolling anchor location in pixels
-    callbackBefore: beforeScroll/*, // Function to run before scrolling
-    callbackAfter: function ( toggle, anchor ) {} // Function to run after scrolling */
+    callbackBefore: beforeScroll,/*, // Function to run before scrolling*/
+    callbackAfter: function ( toggle, anchor ) {
+      //console.log(anchor)
+    } // Function to run after scrolling */
   });
-
   $('#testimonials').slidesjs({
     height:240,
     navigation: {active:true,effect:'slide'},
@@ -60,9 +61,31 @@ function init(){
       $('#featured #text').html(videoText[videoIndex])
       $('#featured #text').fadeIn('slow')
     })
+
+    //once video loads handle page navigation
+    if(project != null){
+      populateProject(project,function(){
+        //smoothScroll.destroy();
+        smoothScroll.animateScroll( null, '#portfolio',{offset: nav.offsetHeight,updateURL:false,easing:'easeOutCubic',speed:1750} );
+      })
+    }
+    if(page != null){
+      smoothScroll.animateScroll( null, page,{offset: nav.offsetHeight,updateURL:false,easing:'easeOutCubic',speed:1750} );
+    }
+
   })
 
   //window.addEventListener('resize', userResize, false);
+
+  //check for nav clicks
+
+  $('#featured ul li a').click(function(){
+    var $this = $(this)
+    if(!$this.hasClass('active')){
+      playSelected($this.attr('class'))
+    }
+    //alert($(this).attr('class'))
+  })
 }
 
 /* Front-End Modifications */
@@ -99,47 +122,37 @@ function beforeScroll(toggle,anchor){
     console.log(" CLASS NAME: "+clss)
     console.log(" SlUG: "+slug)
     //make ajax request and populate page
-
+    if(window.history.pushState){
+      //console.log(anchor)
+      var val = anchor.replace('#','')
+      window.history.pushState('/'+val+'/'+slug,'/'+val+'/'+slug,'/'+val+'/'+slug)
+    }
     $.ajax({
             type:"POST",
             url:"/portfolio/"+slug,
 
     }).done(function(json){
-        console.log(JSON.stringify(json))
-        $(".active").show()
-        $("#project-desc .desc p").html(json.description)
-        $("#project-desc .details .event p").html(json.title)
-        $("#project-desc .details .role p").html(json.role)
-        $("#project-desc .details .location p").html(json.location)
-        $("#project-desc .details .dates p").html(json.dates)
-        console.log(json.images)
-        var div = $('<div>').addClass(slug).addClass('slideshow')
-        $("#project-featured").html(div)
-
-        //$('div').addClass(slug).appendTo("#project-featured")
-        //$("#project-featured").add('div')
-
-        $.each(json.images,function(index,img){
-          console.log(img)
-
-          $("<img>").attr('src',img).appendTo("#project-featured ."+slug)
-        })
-        $('#project-featured .'+slug).slidesjs({
-          width: 960,
-          height: 516,
-          navigation: {active:true,effect:'slide'}
-        })
-        $('#project-featured .'+slug+" ")
-        $('#portfolio .active #project-desc').height($('#portfolio .active #project-desc .details').outerHeight())
+        //console.log(JSON.stringify(json))
+        populateProject(json,function(){})
     })
 
   }else{
     //history.pushState
+    if(window.history.pushState){
+      //console.log(anchor)
+      var val = anchor.replace('#','')
+      //console.log(val)
+      if(val == 'featured') val =''
+      window.history.pushState('/'+val,'/'+val,'/'+val)
+    }
   }
 }
 
-$('.active .close').click(function(e){
+$('.active .close-active').click(function(e){
   $('.active').hide();
+  if(window.history.pushState){
+    window.history.pushState('/portfolio','portfolio','/portfolio')
+  }
 })
 
 $('#featured #nav-left').click(function(e){
@@ -188,7 +201,7 @@ function userResize(){
     overflow:'hidden'
   })
   $('#about').css({
-    'padding-top':window.innerHeight
+    'margin-top':window.innerHeight
   })
 	 if(height<width*(1/aspect)){
 	  	myPlayer.dimensions(width,width*(1/aspect))
@@ -212,10 +225,12 @@ function userResize(){
 
 function playNext(){
   $('#video-1').fadeOut('slow', function(){
+    $('li a.'+videoIndex+'.active').removeClass('active')
   	videoIndex++;
   	if(videoIndex>videoPlay.length-1){
   		videoIndex=0;
   	}
+    $('li a.'+videoIndex).addClass('active')
   	myPlayer.src([
       { type: "video/mp4", src: videoPlay[videoIndex] },
     ])
@@ -230,10 +245,12 @@ function playNext(){
 function playPrev(){
 
 $('#video-1').fadeOut('slow', function(){
+  $('li a.'+videoIndex+'.active').removeClass('active')
   videoIndex--;
   if(videoIndex<0){
     videoIndex=videoPlay.length-1;
   }
+  $('li a.'+videoIndex).addClass('active')
   myPlayer.src([
     { type: "video/mp4", src: videoPlay[videoIndex] },
   ])
@@ -244,4 +261,51 @@ $('#video-1').fadeOut('slow', function(){
 
   $('#video-1').fadeIn('slow',function(){})
 })
+}
+
+function playSelected(newIndex){
+  $('li a.'+videoIndex+'.active').removeClass('active')
+  videoIndex = newIndex
+  $('li a.'+videoIndex).addClass('active')
+  myPlayer.src([
+    { type: "video/mp4", src: videoPlay[videoIndex] },
+  ])
+  $('#featured #text').fadeOut('slow',function(){
+    $('#featured #text').html(videoText[videoIndex])
+    $('#featured #text').fadeIn('slow')
+  })
+
+  $('#video-1').fadeIn('slow',function(){})
+
+}
+
+function populateProject(json,cb){
+  console.log(json)
+  $(".active").show()
+  $('#project-featured .slideshow').remove()
+  $("#project-desc .desc p").html(json.description)
+  $("#project-desc .details .event p").html(json.title)
+  $("#project-desc .details .role p").html(json.role)
+  $("#project-desc .details .location p").html(json.location)
+  $("#project-desc .details .dates p").html(json.dates)
+  console.log(json.images)
+  var div = $('<div>').addClass(json.slug).addClass('slideshow')
+  $("#project-featured").prepend(div)
+
+  //$('div').addClass(slug).appendTo("#project-featured")
+  //$("#project-featured").add('div')
+
+  $.each(json.images,function(index,img){
+    console.log(img)
+
+    $("<img>").attr('src',img).appendTo("#project-featured ."+json.slug)
+  })
+  $('#project-featured .'+json.slug).slidesjs({
+    width: 960,
+    height: 515,
+    navigation: {active:true,effect:'slide'}
+  })
+  $('#project-featured .'+json.slug+" ")
+  $('#portfolio .active #project-desc').height($('#portfolio .active #project-desc .details').outerHeight())
+  cb()
 }

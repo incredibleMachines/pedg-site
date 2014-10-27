@@ -21,7 +21,7 @@ var collections = { projects:null,
                     testimonials:null,
                     featured:null,
                     process:null,
-                    /*clients:null,*/
+                    clients:null,
                     hero:null,
                     users:null }
 

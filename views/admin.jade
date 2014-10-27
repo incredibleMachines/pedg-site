@@ -41,7 +41,7 @@ block content
 
       +dataGroup('testimonials',data.testimonials)
     //- this is commented out
-    //- #clients.row
+    #clients.row
         h1="Clients"
           span.btn-group
             button.btn.btn-link.btn-xs.disabled(type="button") Total: #{data.clients.length}
@@ -117,7 +117,7 @@ block content
             button.btn.btn-primary.btn-sm(type="submit")="Submit Hero Image"
           .modal-footer
     //- this is also commented out
-    //-#clients-add.modal.fade(tabindex="-1",role="dialog")
+    #clients-add.modal.fade(tabindex="-1",role="dialog")
       .modal-dialog
         .modal-content
           div.modal-header
@@ -125,7 +125,7 @@ block content
             h3 Add New Client
           form.add.featured.modal-body(action="/admin/clients",method="post", enctype="multipart/form-data")
             +inputGroup("text","Add A Title", "Client Title", "title")
-            +imageGroup("Add A Project Image", "Project Image(s)","images",false)
+            +imageGroup("Add A Project Image", "Client Image","image",false)
             button.btn.btn-primary.btn-sm(type="submit")="Submit Client"
           .modal-footer
     script(src="/javascripts/admin.js")

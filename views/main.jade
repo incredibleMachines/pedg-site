@@ -19,8 +19,20 @@ block content
           -videoText.push(val.text)
       !="var videoPlay ="
       !{JSON.stringify(videoLinks)}
-      !=";\n\r"
+      !=";\n"
       !="var videoText ="
       !{JSON.stringify(videoText)}
-      !=";"
+      !=";\n"
+      -if(project != null)
+        !='var project ='
+        !{JSON.stringify(project)}
+        !=';\n'
+      -else
+        !='var project = null;\n'
+      -if(page != null)
+        !='var page ="'
+        !{page}
+        !='";\n'
+      -else
+        !='var page = null;\n'
     script(src="/javascripts/main.js")

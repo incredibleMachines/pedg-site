@@ -5,15 +5,15 @@ var bcrypt = require('bcrypt')
 var mongodb = null
 
 /* GET home page. */
-router.get('/', serve('index',''));
+router.get('/', serve.main('index',''));
 /* GET about page. */
-router.get('/about', serve('index','| About'));
+router.get('/about', serve.main('index','| About','#about'));
 /* GET portfolio page. */
-router.get('/portfolio', serve('index','| Portfolio'));
+router.get('/portfolio', serve.main('index','| Portfolio','#portfolio'));
 /* GET clients page. */
-router.get('/clients', serve('index','| Clients'));
+router.get('/clients', serve.main('index','| Clients','#clients'));
 /* GET contact page. */
-router.get('/contact', serve('index','| Contact'));
+router.get('/contact', serve.main('index','| Contact','#contact'));
 
 /* Auth Setup & Login Routes */
 router.get('/login',function(req,res){

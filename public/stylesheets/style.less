@@ -55,7 +55,7 @@ div{width:100%; height:auto;}
     height: @nav-height;
     background: @dark;
     vertical-align:middle;
-    z-index: 999;
+    z-index: 999999;
     text-transform: uppercase;
     @media only screen and (min-device-width : 320px) and (max-device-width : 568px), screen and (max-width : 740px){
       height:@mobile-height;
@@ -191,8 +191,36 @@ div{width:100%; height:auto;}
       //max-width: 40%;
 
     }
+
     .video-js{
       overflow:hidden;
+    }
+    ul.slidesjs-pagination{
+      position:absolute;
+      right:50%;
+      top: 90%;
+      .slidesjs-pagination-item{
+        display:inline;
+        padding: 0;
+        margin: 0 2px;
+        a{
+          padding: 0;
+          margin: 0;
+          display:inline-table;
+          position:relative;
+          z-index: 99999;
+          width: 30px;
+          background-color: @offwhite;
+          opacity: .5;
+          overflow:hidden;
+          text-indent: -9999px;
+          white-space: nowrap;
+          font-size: 4px;
+        }
+        a.active{
+          opacity: 1;
+        }
+      }
     }
 
     #nav-left{
@@ -497,6 +525,14 @@ div{width:100%; height:auto;}
       width: 80%;
       margin: 0 auto;
       position: relative;
+      div.close-active{
+        width:37px;
+        height:40px;
+        position: absolute;
+        top: -60px;
+        right: 0;
+        background: url('../images/close.png')
+      }
       #project-featured{
         .slideshow{
           text-align:center;
@@ -521,7 +557,7 @@ div{width:100%; height:auto;}
           ul.slidesjs-pagination{
             position:absolute;
             right:50%;
-            top: 71%;
+            top: 62%;
             .slidesjs-pagination-item{
               display:inline;
               padding: 0;
@@ -608,7 +644,7 @@ div{width:100%; height:auto;}
 
   }
   //PROJECTS
-  .projects{
+  .projects, .clients{
     position: relative;
     width: 100%;
     max-width: 1280px;
@@ -621,11 +657,11 @@ div{width:100%; height:auto;}
         display:block;
       }
     }
-    .project{
+    .project, .client{
       position:relative;
       width: 250px;
       display: inline-table;
-
+      margin: 10px 0;
       figure{
         position: relative;
         height: auto;
@@ -801,10 +837,10 @@ div{width:100%; height:auto;}
   }
   //Clients
   #clients{
-    margin: 0;
+    margin: 0 0 50px 0;
     padding: 0;
-    background: url('../images/clients.png') no-repeat center;
-    min-height: 1200px;
+    //background: url('../images/clients.png') no-repeat center;
+    //min-height: 1200px;
   }
 
   //HISTORY

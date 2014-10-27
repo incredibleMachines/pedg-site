@@ -35,7 +35,7 @@ router.use('/:type',function(req, res, next) {
 
 /* GET Admin Page*/
 /* Serve Login Serve Page*/
-router.get('/', serve('admin',' | Admin'));
+router.get('/', serve.main('admin',' | Admin'));
 
 
 /* GET Admin Page - Single Project*/
@@ -58,10 +58,29 @@ router.get('/:type/:slug/delete', function(req, res) {
   mongodb =  mongodb || req.app.get('mongodb')
   var type = req.params.type
   var slug = req.params.slug
+  mongodb.queryCollection(type,{slug:slug},function(e,doc){
+    //delete file uploads from the server
+    if(e) res.jsonp({'Error':inspect(e)})
+    else{
 
-  mongodb.remove(type,{slug:slug},function(_e){
-    if(_e) res.jsonp(502,{Error: inspect(_e)})
-    else res.redirect(303,'/admin')
+      for(var key in doc[0]){
+        if(key == 'logo'||
+           key == 'images'||
+           key == 'image' ||
+           key == 'background'||
+           key == 'icon'||
+           key == 'thumbnail'){
+             if(key == 'images') for(var index in doc[0][key]) deleteFile(process.cwd()+'/public'+doc[0][key][index])
+             else deleteFile(process.cwd()+'/public'+doc[0][key])
+           }
+      }
+
+      mongodb.remove(type,{slug:slug},function(_e){
+        if(_e) res.jsonp(502,{Error: inspect(_e)})
+        else res.redirect(303,'/admin')
+      })
+    }
+
   })
 
   //res.jsonp({TODO:'delete-project',req:{type:type,slug:slug}})
@@ -216,7 +235,10 @@ router.post('/:type',function(req,res){
             mongodb.queryCollection(type,{slug:{$regex:regexSlug}},function(e,_data){
               if(e) debug("ERROR FOUND: "+inspect(e))
               //debug("SlugCheck :"+inspect(_data))
-              if(_data.length != 0 ) _fields.slug += ('-'+_data.length)
+              if(_data != null){
+                if(_data.length != 0 ) _fields.slug += ('-'+_data.length)
+              }
+
               mongodb.add(type,_fields,function(_e,_doc){
                 if(_e) debug("DATABASE Write Error: "+_e)
                 res.redirect(303,'/admin')
@@ -300,6 +322,12 @@ function saveFile(file,cb){
     else cb(null,newPath)
   })
 
+}
+
+function deleteFile(file){
+  fs.exists(file,function(exists){
+    if(exists) fs.unlinkSync(file)
+  })
 }
 
 module.exports = router;
