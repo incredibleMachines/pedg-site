@@ -132,7 +132,8 @@ block portfolio
             p
 
     div.hero
-      +image(data.hero[0].image,"Featured",true)
+      if data.hero != null
+        +image(data.hero[0].image,"Featured",true)
     ul.projects
       each val in data.projects
         +project(val)
