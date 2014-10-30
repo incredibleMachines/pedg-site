@@ -70,8 +70,8 @@ router.get('/:type/:slug/delete', function(req, res) {
            key == 'background'||
            key == 'icon'||
            key == 'thumbnail'){
-             if(key == 'images') for(var index in doc[0][key]) deleteFile(process.cwd()+'/public'+doc[0][key][index])
-             else deleteFile(process.cwd()+'/public'+doc[0][key])
+             if(key == 'images') for(var index in doc[0][key]) deleteFile(process.env.SYS_PATH+'/public'+doc[0][key][index])
+             else deleteFile(process.env.SYS_PATH+'/public'+doc[0][key])
            }
       }
 
@@ -95,7 +95,7 @@ router.post('/:type/:slug',function(req,res){
 
   var post = req.body
 
-  var form = new multiparty.Form({uploadDir:process.cwd()+'/tmp'});
+  var form = new multiparty.Form({uploadDir:process.env.SYS_PATH+'/tmp'});
   form.parse(req, function(err, fields, files) {
       if(err) debug(err)
       var obj = {fields: fields, files: files}
@@ -207,7 +207,7 @@ router.post('/:type',function(req,res){
     })
   }else{
     debug('Multiparty Has Form')
-    var form = new multiparty.Form({uploadDir:process.cwd()+'/tmp'});
+    var form = new multiparty.Form({uploadDir:process.env.SYS_PATH+'/tmp'});
     form.parse(req, function(err, fields, files) {
         if(err) debug(err)
         var obj = {fields: fields, files: files}
@@ -312,12 +312,12 @@ function processFile(files){
 }
 
 function saveFile(file,cb){
-  var newPath = process.cwd()+'/public/uploads/'+new Date().toISOString()+'.'+file.originalFilename
+  var newPath = process.env.SYS_PATH+'/public/uploads/'+new Date().toISOString()+'.'+file.originalFilename
   newPath = newPath.replace(/\:/g,'-')
   newPath = newPath.replace(/\s/g,'_')
   //debug(newPath)
   fs.rename(file.path, newPath , function(e){
-    newPath = newPath.replace(process.cwd()+'/public','')
+    newPath = newPath.replace(process.env.SYS_PATH+'/public','')
     if(e) cb(e)
     else cb(null,newPath)
   })
