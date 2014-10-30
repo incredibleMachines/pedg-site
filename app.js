@@ -77,7 +77,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
 app.use(cookieParser());
 app.use(require('less-middleware')(path.join(__dirname, 'public')));
-app.use(express.static(path.join(__dirname, 'public')));
 app.use(session({
   secret: '___________',
   //cookie: { maxAge: 600000 },
@@ -87,6 +86,8 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 app.set('passport',passport)
+app.use(express.static(path.join(__dirname, 'public')));
+
 
 
 app.use('/', routes);
