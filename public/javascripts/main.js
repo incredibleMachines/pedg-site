@@ -300,7 +300,6 @@ function populateProject(json,cb){
 
   //$('div').addClass(slug).appendTo("#project-featured")
   //$("#project-featured").add('div')
-  alert(typeof json.images)
   if(typeof json.images != 'string'){
     $.each(json.images,function(index,img){
       //console.log(img)
