@@ -62,23 +62,27 @@ router.get('/:type/:slug/delete', function(req, res) {
     //delete file uploads from the server
     if(e) res.jsonp({'Error':inspect(e)})
     else{
-
-      for(var key in doc[0]){
-        if(key == 'logo'||
-           key == 'images'||
-           key == 'image' ||
-           key == 'background'||
-           key == 'icon'||
-           key == 'thumbnail'){
-             if(key == 'images') for(var index in doc[0][key]) deleteFile(process.env.SYS_PATH+'/public'+doc[0][key][index])
-             else deleteFile(process.env.SYS_PATH+'/public'+doc[0][key])
-           }
+      //make sure doc[0] exists
+      if(doc.length>0){
+        for(var key in doc[0]){
+          if(key == 'logo'||
+             key == 'images'||
+             key == 'image' ||
+             key == 'background'||
+             key == 'icon'||
+             key == 'thumbnail'){
+               if(key == 'images') for(var index in doc[0][key]) deleteFile(process.env.SYS_PATH+'/public'+doc[0][key][index])
+               else deleteFile(process.env.SYS_PATH+'/public'+doc[0][key])
+             }
+        }
       }
-
-      mongodb.remove(type,{slug:slug},function(_e){
-        if(_e) res.jsonp(502,{Error: inspect(_e)})
-        else res.redirect(303,'/admin')
-      })
+      if(doc.length>0){
+        mongodb.remove(type,{slug:slug},function(_e){
+          if(_e) res.jsonp(502,{Error: inspect(_e)})
+          else res.redirect(303,'/admin')
+        })
+      }
+      else res.redirect(303,'/admin')
     }
 
   })
@@ -211,7 +215,8 @@ router.post('/:type',function(req,res){
     form.parse(req, function(err, fields, files) {
         if(err) debug(err)
         var obj = {fields: fields, files: files}
-
+        debug(inspect(fields))
+        debug(inspect(obj))
         //handle files
         //handle fields
         async.waterfall([processFile(files),
@@ -225,7 +230,7 @@ router.post('/:type',function(req,res){
             _cb(null,fields)
           }
           ],function(_err,_fields){
-            debug(inspect(fields))
+            debug(inspect(_fields))
             debug('Waterfall Complete')
             //do the slug check
             //make slug
