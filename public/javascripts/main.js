@@ -300,12 +300,17 @@ function populateProject(json,cb){
 
   //$('div').addClass(slug).appendTo("#project-featured")
   //$("#project-featured").add('div')
+  alert(typeof json.images)
+  if(typeof json.images != 'string'){
+    $.each(json.images,function(index,img){
+      //console.log(img)
 
-  $.each(json.images,function(index,img){
-    //console.log(img)
+      $("<img>").attr('src',img).appendTo("#project-featured ."+json.slug)
+    })
+  }else{
+      $("<img>").attr('src',json.images).appendTo("#project-featured ."+json.slug)
+  }
 
-    $("<img>").attr('src',img).appendTo("#project-featured ."+json.slug)
-  })
   $('#project-featured .'+json.slug).slidesjs({
     width: 960,
     height: 515,

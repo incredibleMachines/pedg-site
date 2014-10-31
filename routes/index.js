@@ -36,6 +36,11 @@ router.post('/login',function(req,res,next){
     //req.app.get('passport').authenticate('local',{successRedirect:'/admin',failureRedirect:'/admin/login'})
 })
 
+router.get('/logout', function(req, res){
+  req.logout();
+  res.redirect('/');
+});
+
 router.get('/setup',function(req,res){
   res.render('setup',{user:req.user})
 })

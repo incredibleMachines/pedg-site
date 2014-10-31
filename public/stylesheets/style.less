@@ -1076,7 +1076,7 @@ div{width:100%; height:auto;}
 //admin
 
 #admin{
-
+  margin-top: 60px;
   h1,h2,h3,h4{
     text-align:left;
     span{
@@ -1084,7 +1084,63 @@ div{width:100%; height:auto;}
       vertical-align:middle;
     }
   }
-  #process,#testimonials,#portfolio,#featured{
+  nav{
+
+    width: 100%;
+    //top: 100%;
+    //margin-top: @nav-height*-1;
+    //height: @nav-height;
+    background: @dark;
+    vertical-align:middle;
+    z-index: 999999;
+    text-transform: uppercase;
+    @media only screen and (min-device-width : 320px) and (max-device-width : 568px), screen and (max-width : 740px){
+      height:@mobile-height;
+    }
+
+    ul{
+      padding-top:20px;
+      position:relative;
+      vertical-align:middle;
+    }
+
+    li{
+      @media only screen and (min-device-width : 320px) and (max-device-width : 568px), screen and (max-width : 740px)  {
+        float: left;
+        clear:both;
+        font-size:3em;
+        display:none;
+      }
+      width: 100px;
+      position:relative;
+      margin: 0 10px;
+      padding: 0 auto;
+      color:@inverse;
+      vertical-align:middle;
+      text-align:center;
+    }
+    a{
+      // @media only screen and (min-device-width : 320px) and (max-device-width : 568px) {
+      //   display: none;
+      // }
+      text-decoration: none;
+      color:@inverse;
+      font-family:'geometria_light', helvetica,sans-serif;
+      font-weight:normal;
+      text-align:center;
+
+    }
+    a:hover{
+      text-decoration:none;
+      color:@inverse;
+      //text-shadow: 1px 0px 6px rgba(247, 246, 246, 0.6);
+      //color: @white;
+      //font-family:'geometria_bold', helvetica,sans-serif;
+      //font-weight:bold;
+    }
+  }
+
+  #process,#testimonials,#portfolio,#featured,#hero,#clients{
     margin: 0 auto;
     padding: 0 auto;
     height: auto;

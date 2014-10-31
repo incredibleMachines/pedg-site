@@ -1,134 +1,151 @@
 extends layout
 
 block content
-  #admin.container
-    #featured.row
-      h1="featured"
-        span.btn-group
-          button.btn.btn-link.btn-xs.disabled(type="button") Total: #{data.featured.length}
-          button.add.featured.btn.btn-primary.btn-xs(type="button",data-toggle="modal",data-target="#featured-add") Add
-          button.btn.btn-info.btn-xs.toggle(type="button") Hide
-      +dataGroup('featured',data.featured)
-
-    #portfolio.row
-      h1="Portfolio"
-        span.btn-group
-          button.btn.btn-link.btn-xs.disabled(type="button") Total: #{data.projects.length}
-          button.add.portfolio.btn.btn-primary.btn-xs(type="button",data-toggle="modal",data-target="#portfolio-add") Add
-          button.btn.btn-info.btn-xs.toggle(type="button") Hide
-      +dataGroup('projects',data.projects)
-    #hero.row
-      h1="Portfolio Hero"
-        span.btn-group
-          button.btn.btn-link.btn-xs.disabled(type="button") Total: #{data.hero.length}
-          button.add.portfolio.btn.btn-primary.btn-xs(type="button",data-toggle="modal",data-target="#hero-add") Add
-          button.btn.btn-info.btn-xs.toggle(type="button") Hide
-      +dataGroup('hero',data.hero)
-    #process.row
-      h1="Process"
-        span.btn-group
-          button.btn.btn-link.btn-xs.disabled(type="button") Total: #{data.process.length}
-          button.add.process.btn.btn-primary.btn-xs(type="button",data-toggle="modal",data-target="#process-add") Add
-          button.btn.btn-info.btn-xs.toggle(type="button") Hide
-      +dataGroup('process',data.process)
-
-    #testimonials.row
-      h1="Testimonials"
-        span.btn-group
-          button.btn.btn-link.btn-xs.disabled(type="button") Total: #{data.testimonials.length}
-          button.add.testimonials.btn.btn-primary.btn-xs(type="button",data-toggle="modal",data-target="#testimonials-add") Add
-          button.btn.btn-info.btn-xs.toggle(type="button") Hide
-
-      +dataGroup('testimonials',data.testimonials)
-    //- this is commented out
-    #clients.row
-        h1="Clients"
+  #admin
+    nav.navbar.navbar-inverse.navbar-fixed-top(role="navigation")
+      ul
+        li
+          a(data-scroll,href="#featured") Featured
+        li
+          a(data-scroll,href="#portfolio") Portfolio
+        li
+          a(data-scroll,href="#hero") Portfolio Hero
+        li
+          a(data-scroll,href="#process") Process
+        li
+          a(data-scroll,href="#testimonials") Testimonials
+        li
+          a(data-scroll,href="#clients") Clients
+        li
+          a(href="/logout") Logout
+    .container
+      #featured.row
+        h1="featured"
           span.btn-group
-            button.btn.btn-link.btn-xs.disabled(type="button") Total: #{data.clients.length}
-            button.add.testimonials.btn.btn-primary.btn-xs(type="button",data-toggle="modal",data-target="#clients-add") Add
+            button.btn.btn-link.btn-xs.disabled(type="button") Total: #{data.featured.length}
+            button.add.featured.btn.btn-primary.btn-xs(type="button",data-toggle="modal",data-target="#featured-add") Add
+            button.btn.btn-info.btn-xs.toggle(type="button") Hide
+        +dataGroup('featured',data.featured)
+
+      #portfolio.row
+        h1="Portfolio"
+          span.btn-group
+            button.btn.btn-link.btn-xs.disabled(type="button") Total: #{data.projects.length}
+            button.add.portfolio.btn.btn-primary.btn-xs(type="button",data-toggle="modal",data-target="#portfolio-add") Add
+            button.btn.btn-info.btn-xs.toggle(type="button") Hide
+        +dataGroup('projects',data.projects)
+      #hero.row
+        h1="Portfolio Hero"
+          span.btn-group
+            button.btn.btn-link.btn-xs.disabled(type="button") Total: #{data.hero.length}
+            button.add.portfolio.btn.btn-primary.btn-xs(type="button",data-toggle="modal",data-target="#hero-add") Add
+            button.btn.btn-info.btn-xs.toggle(type="button") Hide
+        +dataGroup('hero',data.hero)
+      #process.row
+        h1="Process"
+          span.btn-group
+            button.btn.btn-link.btn-xs.disabled(type="button") Total: #{data.process.length}
+            button.add.process.btn.btn-primary.btn-xs(type="button",data-toggle="modal",data-target="#process-add") Add
+            button.btn.btn-info.btn-xs.toggle(type="button") Hide
+        +dataGroup('process',data.process)
+
+      #testimonials.row
+        h1="Testimonials"
+          span.btn-group
+            button.btn.btn-link.btn-xs.disabled(type="button") Total: #{data.testimonials.length}
+            button.add.testimonials.btn.btn-primary.btn-xs(type="button",data-toggle="modal",data-target="#testimonials-add") Add
             button.btn.btn-info.btn-xs.toggle(type="button") Hide
 
-        +dataGroup('clients',data.clients)
+        +dataGroup('testimonials',data.testimonials)
+      //- this is commented out
+      #clients.row
+          h1="Clients"
+            span.btn-group
+              button.btn.btn-link.btn-xs.disabled(type="button") Total: #{data.clients.length}
+              button.add.testimonials.btn.btn-primary.btn-xs(type="button",data-toggle="modal",data-target="#clients-add") Add
+              button.btn.btn-info.btn-xs.toggle(type="button") Hide
 
-    #testimonials-add.modal.fade(tabindex="-1",role="dialog")
-      .modal-dialog
-        .modal-content
-          div.modal-header
-            button.close.glyphicon.glyphicon-remove(data-dismiss="modal")
-            h3 Add New Testimonial
-          form.add.testimonials.modal-body(action="/admin/testimonials",method="post", enctype="multipart/form-data")
-            +inputGroup("text","Add A Name", "Person's Name", "name")
-            +inputGroup("text","Add A Title", "Person's Title", "title")
-            +inputGroup("text","Add A Quote", "Quote", "text")
-            +inputGroup("file","Add An Image", "Background", "background")
-            +inputGroup("file","Add A Logo", "Company Logo", "logo")
-            button.btn.btn-primary.btn-sm(type="submit")="Submit Testimonial Item"
-          .modal-footer
-    #process-add.modal.fade(tabindex="-1",role="dialog")
-      .modal-dialog
-        .modal-content
-          div.modal-header
-            button.close.glyphicon.glyphicon-remove(data-dismiss="modal")
-            h3 Add New Process
-          form.add.process.modal-body(action="/admin/process",method="post", enctype="multipart/form-data")
-            +inputGroup("text","Add A Title", "Process Title", "title")
-            +textGroup("text","Add A Description", "Process Description", "description")
-            +inputGroup("file","Add An Image", "Process Image", "image")
-            +inputGroup("file","Add An Icon", "Process Icon", "icon")
-            button.btn.btn-primary.btn-sm(type="submit")="Submit Process Item"
-          .modal-footer
-    #portfolio-add.modal.fade(tabindex="-1",role="dialog")
-      .modal-dialog
-        .modal-content
-          div.modal-header
-            button.close.glyphicon.glyphicon-remove(data-dismiss="modal")
-            h3 Add New Project
-          form.add.portfolio.modal-body(action="/admin/projects",method="post", enctype="multipart/form-data")
-            +inputGroup("text","Add A Title", "Project Title", "title")
-            +textGroup("text","Add A Description", "Project Description", "description")
-            +inputGroup("text","Add A Role", "Project Role", "role")
-            +inputGroup("text","Add A Location", "Project Location", "location")
-            +inputGroup("text","Add A Date(s)", "Project Dates", "dates")
-            +inputGroup("file", "Add A Thumbnail Image", "Project Thumbnail", "thumbnail")
-            +imageGroup("Add A Project Image", "Project Image(s)","images",true)
-            button.btn.btn-primary.btn-sm(type="submit")="Submit Portfolio Item"
-          .modal-footer
-    #featured-add.modal.fade(tabindex="-1",role="dialog")
-      .modal-dialog
-        .modal-content
-          div.modal-header
-            button.close.glyphicon.glyphicon-remove(data-dismiss="modal")
-            h3 Add New Featured
-          form.add.featured.modal-body(action="/admin/featured",method="post", enctype="multipart/form-data")
-            +inputGroup("text","Add A Title", "featured Title", "title")
-            +inputGroup("text","Add A Video URL", "featured Video", "url")
-            +inputGroup("text","Add A Text Callout","featured Text", "text")
-            button.btn.btn-primary.btn-sm(type="submit")="Submit featured Item"
-          .modal-footer
-    #hero-add.modal.fade(tabindex="-1",role="dialog")
-      .modal-dialog
-        .modal-content
-          div.modal-header
-            button.close.glyphicon.glyphicon-remove(data-dismiss="modal")
-            h3 Add New Client
-          form.add.featured.modal-body(action="/admin/hero",method="post", enctype="multipart/form-data")
-            +inputGroup("text","Add A Title", "Hero Title", "title")
-            +imageGroup("Add A Hero Image", "Hero Image","image",false)
-            button.btn.btn-primary.btn-sm(type="submit")="Submit Hero Image"
-          .modal-footer
-    //- this is also commented out
-    #clients-add.modal.fade(tabindex="-1",role="dialog")
-      .modal-dialog
-        .modal-content
-          div.modal-header
-            button.close.glyphicon.glyphicon-remove(data-dismiss="modal")
-            h3 Add New Client
-          form.add.featured.modal-body(action="/admin/clients",method="post", enctype="multipart/form-data")
-            +inputGroup("text","Add A Title", "Client Title", "title")
-            +imageGroup("Add A Project Image", "Client Image","image",false)
-            button.btn.btn-primary.btn-sm(type="submit")="Submit Client"
-          .modal-footer
-    script(src="/javascripts/admin.js")
+          +dataGroup('clients',data.clients)
+
+      #testimonials-add.modal.fade(tabindex="-1",role="dialog")
+        .modal-dialog
+          .modal-content
+            div.modal-header
+              button.close.glyphicon.glyphicon-remove(data-dismiss="modal")
+              h3 Add New Testimonial
+            form.add.testimonials.modal-body(action="/admin/testimonials",method="post", enctype="multipart/form-data")
+              +inputGroup("text","Add A Name", "Person's Name", "name")
+              +inputGroup("text","Add A Title", "Person's Title", "title")
+              +inputGroup("text","Add A Quote", "Quote", "text")
+              +inputGroup("file","Add An Image", "Background", "background")
+              +inputGroup("file","Add A Logo", "Company Logo", "logo")
+              button.btn.btn-primary.btn-sm(type="submit")="Submit Testimonial Item"
+            .modal-footer
+      #process-add.modal.fade(tabindex="-1",role="dialog")
+        .modal-dialog
+          .modal-content
+            div.modal-header
+              button.close.glyphicon.glyphicon-remove(data-dismiss="modal")
+              h3 Add New Process
+            form.add.process.modal-body(action="/admin/process",method="post", enctype="multipart/form-data")
+              +inputGroup("text","Add A Title", "Process Title", "title")
+              +textGroup("text","Add A Description", "Process Description", "description")
+              +inputGroup("file","Add An Image", "Process Image", "image")
+              +inputGroup("file","Add An Icon", "Process Icon", "icon")
+              button.btn.btn-primary.btn-sm(type="submit")="Submit Process Item"
+            .modal-footer
+      #portfolio-add.modal.fade(tabindex="-1",role="dialog")
+        .modal-dialog
+          .modal-content
+            div.modal-header
+              button.close.glyphicon.glyphicon-remove(data-dismiss="modal")
+              h3 Add New Project
+            form.add.portfolio.modal-body(action="/admin/projects",method="post", enctype="multipart/form-data")
+              +inputGroup("text","Add A Title", "Project Title", "title")
+              +textGroup("text","Add A Description", "Project Description", "description")
+              +inputGroup("text","Add A Role", "Project Role", "role")
+              +inputGroup("text","Add A Location", "Project Location", "location")
+              +inputGroup("text","Add A Date(s)", "Project Dates", "dates")
+              +inputGroup("file", "Add A Thumbnail Image", "Project Thumbnail", "thumbnail")
+              +imageGroup("Add A Project Image", "Project Image(s)","images",true)
+              button.btn.btn-primary.btn-sm(type="submit")="Submit Portfolio Item"
+            .modal-footer
+      #featured-add.modal.fade(tabindex="-1",role="dialog")
+        .modal-dialog
+          .modal-content
+            div.modal-header
+              button.close.glyphicon.glyphicon-remove(data-dismiss="modal")
+              h3 Add New Featured
+            form.add.featured.modal-body(action="/admin/featured",method="post", enctype="multipart/form-data")
+              +inputGroup("text","Add A Title", "featured Title", "title")
+              +inputGroup("text","Add A Video URL", "featured Video", "url")
+              +inputGroup("text","Add A Text Callout","featured Text", "text")
+              button.btn.btn-primary.btn-sm(type="submit")="Submit featured Item"
+            .modal-footer
+      #hero-add.modal.fade(tabindex="-1",role="dialog")
+        .modal-dialog
+          .modal-content
+            div.modal-header
+              button.close.glyphicon.glyphicon-remove(data-dismiss="modal")
+              h3 Add New Client
+            form.add.featured.modal-body(action="/admin/hero",method="post", enctype="multipart/form-data")
+              +inputGroup("text","Add A Title", "Hero Title", "title")
+              +imageGroup("Add A Hero Image", "Hero Image","image",false)
+              button.btn.btn-primary.btn-sm(type="submit")="Submit Hero Image"
+            .modal-footer
+      //- this is also commented out
+      #clients-add.modal.fade(tabindex="-1",role="dialog")
+        .modal-dialog
+          .modal-content
+            div.modal-header
+              button.close.glyphicon.glyphicon-remove(data-dismiss="modal")
+              h3 Add New Client
+            form.add.featured.modal-body(action="/admin/clients",method="post", enctype="multipart/form-data")
+              +inputGroup("text","Add A Title", "Client Title", "title")
+              +imageGroup("Add A Project Image", "Client Image","image",false)
+              button.btn.btn-primary.btn-sm(type="submit")="Submit Client"
+            .modal-footer
+      script(src="/javascripts/admin.js")
 
 
 

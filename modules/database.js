@@ -78,7 +78,7 @@ MongoConnect.prototype.queryCollection = function(_type, _query,_opts, _cb){
 
   this.collections[_type].find(_query,_opts).toArray(function(e,_data){
 		if(!e && _data.length>0) _cb(null,_data);
-    else if(_data.length == 0) _cb(null,null)
+    else if(!_data) _cb(null ,null)
 		else _cb(e);
 	})
 }
