@@ -24,7 +24,7 @@ function MongoConnect(opts,cb){
     debug('-------------------------')
     debug('Starting Mongo Connection')
 
-    var err_count =0;
+    var err_count = 0;
 
     this.mongo.open(init)
 
@@ -33,9 +33,9 @@ function MongoConnect(opts,cb){
         err_count++;
         console.log("ErrorCount: "+err_count)
         console.log(err)
-        return _this.mongo.open(init)
-        // if(err_count>5){ return _this.mongo.open(init)
-        // }else{ return process.exit(1) }
+        if(err_count>5){
+          return _this.mongo.open(init)
+        }else{ process.kill(process.pid, 'SIGTERM'); }
       }
       _this.MongoDB = mongo.db(_this.database)
       debug('Success Connected to DB '+_this.database)
