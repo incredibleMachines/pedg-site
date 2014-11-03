@@ -69,6 +69,7 @@ app.set('collections',collections)
 //give express access to our DB Object
 
 var db = new Database({database:'PEDG', collections:collections},function(){
+  console.log('Setting Database')
   app.set('mongodb',db)
 })
 //app.set('mongodb',new Database({database:'PEDG', collections:collections}))
