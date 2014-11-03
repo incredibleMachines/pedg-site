@@ -24,8 +24,13 @@ function MongoConnect(opts,cb){
     debug('-------------------------')
     debug('Starting Mongo Connection')
 
-    this.mongo.open(function(err,mongo){
-      if(err) throw err
+    this.mongo.open(init)
+
+    function init(err,mongo){
+      if(err){
+        console.log(err)
+        return _this.mongo.open(init)
+      }
       _this.MongoDB = mongo.db(_this.database)
       debug('Success Connected to DB '+_this.database)
       //set up our collections
@@ -34,9 +39,7 @@ function MongoConnect(opts,cb){
         _this.collections[coll] = _this.MongoDB.collection(coll)
 
       }
-
-      //debug(_this)
-    })
+    }
 }
 
 //_doc = mongo document to add
