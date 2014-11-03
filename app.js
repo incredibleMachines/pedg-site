@@ -67,7 +67,11 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 app.set('collections',collections)
 //give express access to our DB Object
-app.set('mongodb',new Database({database:'PEDG', collections:collections}))
+
+var db = new Database({database:'PEDG', collections:collections},function(){
+  app.set('mongodb',db)
+})
+//app.set('mongodb',new Database({database:'PEDG', collections:collections}))
 
 
 app.use(favicon());

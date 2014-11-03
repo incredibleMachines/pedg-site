@@ -39,6 +39,7 @@ function MongoConnect(opts,cb){
         _this.collections[coll] = _this.MongoDB.collection(coll)
 
       }
+      cb()
     }
 }
 
