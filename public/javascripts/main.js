@@ -3,6 +3,8 @@ var nav, featured
 var aspect=16/9, videoIndex=0
 var myPlayer
 
+var videoLoaded=false
+
 var opts = {speed: 1750, easing: 'easeOutCubic',updateURL: false, offset: 0}
 
 
@@ -51,11 +53,13 @@ function init(){
     pagination: {active:false}
   })
 
+  userResize()
 
   //VIDEO PLAYER
   $('.video-js').css('position','absolute')
   videojs("video-1",{width:window.innerWidth, height: window.innerHeight}).ready(function(){
-	  myPlayer = this
+	  videoLoaded=true
+    myPlayer = this
   	sH = window.innerHeight,
 	  sW = window.innerWidth
     myPlayer.src([
@@ -189,6 +193,7 @@ function hasClass(element,cls){
 function userResize(){
   var width=window.innerWidth
   var height=window.innerHeight-$('#header').height()
+
   $('#featured').css({
     width:width,
     height:height,
@@ -197,16 +202,25 @@ function userResize(){
   $('#about').css({
     'margin-top':window.innerHeight
   })
-	 if(height<width*(1/aspect)){
-	  	myPlayer.dimensions(width,width*(1/aspect))
-	  	$('#video-1').css("left",0)
-	  	$('#video-1').css("top",(height-myPlayer.height())/2)
-	}
-	else{
-	   myPlayer.dimensions(height*aspect,height);
-	   $('#video-1').css("top",0);
-	   $('#video-1').css("left",(width-myPlayer.width())/2);
-	}
+
+  if(videoLoaded==true){
+     $('#placeholder').css('display','none')
+  	 if(height<width*(1/aspect)){
+  	  	myPlayer.dimensions(width,width*(1/aspect))
+  	  	$('#video-1').css("left",0)
+  	  	$('#video-1').css("top",(height-myPlayer.height())/2)
+  	}
+  	else{
+  	   myPlayer.dimensions(height*aspect,height);
+  	   $('#video-1').css("top",0);
+  	   $('#video-1').css("left",(width-myPlayer.width())/2);
+  	}
+  }
+  else{
+    $('#placeholder').width(width)
+    $('#placeholder').height(height)
+  }
+
   if(width<1200){
     $('#testimonials img.background').css('margin-left',-(1200-width)/2)
   }
@@ -214,10 +228,8 @@ function userResize(){
     $('#testimonials img.background').css('margin-left',0)
   }
 
-  if(width>740){
-    $().hide()
-  }
   $('#portfolio #active #project-desc').height($('#portfolio #active #project-desc .details').outerHeight())
+
   if($('#mobile-branding').css('display')=='none'){
     $('#mobile-expand').removeClass('active')
     $('#header li').css('display','inline')
@@ -226,6 +238,7 @@ function userResize(){
   }
   else if(!$('#mobile-expand').hasClass('active')){
     $('#header').height(150)
+    $('#header li').css('display','none')
   }
 }
 
