@@ -33,8 +33,9 @@ function MongoConnect(opts,cb){
         err_count++;
         console.log("ErrorCount: "+err_count)
         console.log(err)
-        if(err_count>5){ return _this.mongo.open(init)
-        }else{ return process.exit(1) }
+        return _this.mongo.open(init)
+        // if(err_count>5){ return _this.mongo.open(init)
+        // }else{ return process.exit(1) }
       }
       _this.MongoDB = mongo.db(_this.database)
       debug('Success Connected to DB '+_this.database)
