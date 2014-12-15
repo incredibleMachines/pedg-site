@@ -7,48 +7,49 @@ block nav
       .line
       .line
       .line
-    ul
-      li
-        a(data-scroll,href="#featured") Home
-      li
-        a(data-scroll,href="#about") About
-      li
-        a(data-scroll,href="#portfolio") Portfolio
-      li#branding
-      li
-        a(data-scroll,href="") Reel
-      li
-        a(data-scroll,href="#clients") Clients
-      li
-        a(data-scroll,href="#contact") Contact
+    #nav-items
+      a(data-scroll,href="#featured")#branding
+      ul
+        li
+          a(data-scroll,href="#about") About
+        li
+          a(data-scroll,href="#reel") Reel
+        li
+          a(data-scroll,href="#portfolio") Work
+        li
+          a(data-scroll,href="#clients") Clients
+        li
+          a(data-scroll,href="#contact") Contact
 
 
 block featured
   #featured
-    img#placeholder(src="images/placeholder.jpg")
-    #text
-    ul.slidesjs-pagination
-      -var c = 0
-      -each val in data.featured
-        -c++
-        li.slidesjs-pagination-item
-          unless c == 1
-            a(class=c-1) #{val.text}
-          else
-            a.active(class=c-1) #{val.text}
+    //-
+      img#placeholder(src="images/placeholder.jpg")
+      #text
+      ul.slidesjs-pagination
+        -var c = 0
+        -each val in data.featured
+          -c++
+          li.slidesjs-pagination-item
+            unless c == 1
+              a(class=c-1) #{val.text}
+            else
+              a.active(class=c-1) #{val.text}
+
 
     video#video-1.video-js.featured-video(preload='auto',autoplay)
-    #nav-left
-    #nav-right
+    //-
+      #nav-left
+      #nav-right
 
 
 block about
   section#about
     p.callout="A versatile group of innovators dedicated to creating unique environments for any size event. Trusting the project to lead the product, we focus on preserving the true spirit and motivation behind your biggest ideas. From inception to showtime expect uncommon care."
     #services
-      h1="In-House Services"
-        span.line
-      p="We are poised to work with you to provide the suite of services that fit your needs."
+      h1="Capabilities"
+      p="Our in-house team is poised to work with you to provide the suite of services that fit your needs."
       ul.all-services
         li.produce
           ul.services
@@ -58,60 +59,62 @@ block about
             li creative
             li technical
             li content
-        li.direct
-          ul.services
-            li.img
-            li.head direct
-            li show
-            li creative
-            li technical
-            li lighting
         li.design
           ul.services
             li.img
             li.head design
-            li stage
-            li scenic
-            li video
             li lighting
-            li decor
+            li multi media scenic
+            li video content
+            li graphic design
         li.model
           ul.services
             li.img
-            li.head model
-            li hand sketches
-            li storyboards
-            li 2d drafting
-            li 3d modeling
-            li animation
-        li.light
-          ul.services
-            li.img
-            li.head light
-            li design
+            li.head technical
             li previsualization
             li programming
-            li direction
-
-    section#process
-      h1="Process"
-        span.line
-      p="We believe that process is paramount. We have distilled ours into six distinct phases."
-      ul.icons
-        each val,index in data.process
-          li
-            img(src=val.icon)
-          unless index == data.process.length-1
+            li site planning
+            li 3d modeling
+        li.direct
+          ul.services
+            li.img
+            li.head direction
+            li show
+            li creative
+            li technical
+            li lighting
+        //-
+          li.light
+            ul.services
+              li.img
+              li.head light
+              li design
+              li previsualization
+              li programming
+              li direction
+    //-
+      section#process
+        h1="Process"
+          span.line
+        p="We believe that process is paramount. We have distilled ours into six distinct phases."
+        ul.icons
+          each val,index in data.process
             li
-              img(src="/images/pointing_arrow.png")
-      section.slideshow
-        each val,index in data.process
-          +process(val)
+              img(src=val.icon)
+            unless index == data.process.length-1
+              li
+                img(src="/images/pointing_arrow.png")
+        section.slideshow
+          each val,index in data.process
+            +process(val)
+
+block reel
+  section#reel
+    video#video-2.video-js
 
 block portfolio
   section#portfolio
-    h1="Portfolio"
-      span.line
+    h1="Work"
     #active(style="display:none")
       div.close-active
       #project-featured
@@ -131,27 +134,27 @@ block portfolio
               p
           .desc
             p
-
-    div.hero
-      if data.hero.length > 0
-        +image(data.hero[0].image,"Featured",true)
+    //-
+      div.hero
+        if data.hero.length > 0
+          +image(data.hero[0].image,"Featured",true)
     ul.projects
       each val in data.projects
         +project(val)
 
 
-
-block history
-  section#history
-    .right-bg-1
-    .right-bg-2
-    .left-bg-1
-    .left-bg-2
-    h1="Our History"
-      span.line
-    section.text
-      p Independently established lighting designers Spike Brant and Justin Collie first began working together in 1987. As technicians with Def Leppard and The Cure, and ultimately collaborating as designers for Korn, the duo began to realize their style and drive were complimented when working together and decided to form an alliance that became known as ‘ARTFAG’.
-      p Over the next decade, Spike and Justin began evolving their technique, reaching beyond lighting design and programming. They envisioned events from every angle, and found ways to contribute to the spirit of the production as a whole. Coining the term ‘PERFORMANCE ENVIRONMENT DESIGN’, the pair’s all encompassing detail driven approach caught on. The ‘GROUP’ has evolved from their detailed attention to event culture and is now a collaboration of many skilled technicians and artists.
+//-
+  block history
+    section#history
+      .right-bg-1
+      .right-bg-2
+      .left-bg-1
+      .left-bg-2
+      h1="Our History"
+        span.line
+      section.text
+        p Independently established lighting designers Spike Brant and Justin Collie first began working together in 1987. As technicians with Def Leppard and The Cure, and ultimately collaborating as designers for Korn, the duo began to realize their style and drive were complimented when working together and decided to form an alliance that became known as ‘ARTFAG’.
+        p Over the next decade, Spike and Justin began evolving their technique, reaching beyond lighting design and programming. They envisioned events from every angle, and found ways to contribute to the spirit of the production as a whole. Coining the term ‘PERFORMANCE ENVIRONMENT DESIGN’, the pair’s all encompassing detail driven approach caught on. The ‘GROUP’ has evolved from their detailed attention to event culture and is now a collaboration of many skilled technicians and artists.
 
 
 block clients
@@ -160,7 +163,6 @@ block clients
       each val in data.testimonials
         +testimonial(val)
     h1="Clients"
-      span.line
     ul.clients
       each val in data.clients
         +client(val)

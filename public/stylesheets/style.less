@@ -2,14 +2,14 @@
 /* PEDG Custom Stylesheet */
 
 //GLOBALS
-@nav-height: 111px;
+@nav-height: 83px;
 @mobile-height:150px;
 @dark: #333;
-@off-black: #1a1a1a;
+@off-black: #030101;
 @medgray: #c0c0c0;
 @solidgray:#b4b4b4;
 @dkgray:#595959;
-@offwhite: #f6f6f6;
+@offwhite: #fafafa;
 @inverse: @offwhite;
 
 @white: #fff;
@@ -17,11 +17,12 @@
 
 html,body{width: 100%; height: 100%; margin:0; padding:0; /*overflow-x: hidden;*/}
 h1,h2,h3,h4,h5,h6,p,ul,li,div,section,nav,figure,figcaption{text-align:center;
-                                                            font-family: 'geometria_light',helvetica, sans-serif;}
+                                                            font-family: 'geometria_light',helvetica, sans-serif; margin:0;}
 
-h2,h3,h4,h5,h6,strong{
+h1,h2,h3,h4,h5,h6,strong{
         font-family:'geometria_bold', helvetica,sans-serif;
         text-transform:uppercase;
+        letter-spacing:2px;
 }
 
 h1{
@@ -46,6 +47,7 @@ li{display: inline;}
 div{width:100%; height:auto;}
 
 #main{
+  background-color:@offwhite;
   nav{
 
     width: 100%;
@@ -53,7 +55,7 @@ div{width:100%; height:auto;}
     top: 100%;
     margin-top: @nav-height*-1;
     height: @nav-height;
-    background: @dark;
+    background: @off-black;
     vertical-align:middle;
     z-index: 999999;
     text-transform: uppercase;
@@ -61,56 +63,68 @@ div{width:100%; height:auto;}
       height:@mobile-height;
     }
 
-    ul{
-      padding-top:20px;
-      position:relative;
-      vertical-align:middle;
-    }
+    #nav-items{
+      max-width:986px;
+      height: @nav-height;
+      top:100%;
+      margin:0 auto;
 
-    li{
-      @media only screen and (min-device-width : 320px) and (max-device-width : 568px), screen and (max-width : 740px)  {
-        float: left;
-        clear:both;
-        font-size:3em;
-        display:none;
+      ul{
+        padding-top:30px;
+        position:relative;
+        float:right;
+        padding-right:56px;
+        vertical-align:middle;
       }
-      width: 100px;
-      position:relative;
-      margin: 0 10px;
-      padding: 0 auto;
-      color:@inverse;
-      vertical-align:middle;
-      text-align:center;
-    }
-    a{
-      // @media only screen and (min-device-width : 320px) and (max-device-width : 568px) {
-      //   display: none;
-      // }
-      text-decoration: none;
-      color:@inverse;
-      font-family:'geometria_light', helvetica,sans-serif;
-      font-weight:normal;
-      text-align:center;
 
-    }
-    a:hover{
-      text-decoration:none;
-      color:@inverse;
-      //text-shadow: 1px 0px 6px rgba(247, 246, 246, 0.6);
-      //color: @white;
-      //font-family:'geometria_bold', helvetica,sans-serif;
-      //font-weight:bold;
-    }
+      li{
+        @media only screen and (min-device-width : 320px) and (max-device-width : 568px), screen and (max-width : 740px)  {
+          float: left;
+          clear:both;
+          font-size:3em;
+          display:none;
+        }
+        width: 100px;
+        position:relative;
+        margin: 0 10px;
+        padding: 0 auto;
+        color:white;
+        vertical-align:middle;
+        text-align:center;
+      }
+      a{
+        // @media only screen and (min-device-width : 320px) and (max-device-width : 568px) {
+        //   display: none;
+        // }
+        text-decoration: none;
+        color:@inverse;
+        font-family:'geometria_light', helvetica,sans-serif;
+        font-weight:normal;
+        text-align:center;
 
-    #branding{
-      position: relative;
-      display:inline-block;
-      vertical-align: middle;
-      width:253px;
-      height:72px;
-      background:url('../images/branding.png') center no-repeat;
-      @media only screen and (min-device-width : 320px) and (max-device-width : 568px), screen and (max-width : 740px) {
-        display: none;
+      }
+      a:hover{
+        text-decoration:none;
+        color:@inverse;
+        //text-shadow: 1px 0px 6px rgba(247, 246, 246, 0.6);
+        //color: @white;
+        //font-family:'geometria_bold', helvetica,sans-serif;
+        //font-weight:bold;
+      }
+
+      #branding{
+        position: relative;
+        display:inline-block;
+        float:left;
+        vertical-align: middle;
+        width:152px;
+        height:43px;
+        margin-left:56px;
+        margin-top:20px;
+        background:url('../images/branding_small.png') center no-repeat;
+        @media only screen and (min-device-width : 320px) and (max-device-width : 568px), screen and (max-width : 740px) {
+          display: none;
+        }
       }
     }
 
@@ -256,28 +270,30 @@ div{width:100%; height:auto;}
   .callout{
     height: 100%;
     margin: 30px auto 0;
-    width: 80%;
-    padding: 30px 0 50px 0;
-    font-size: 1.6em;
+    width: 100%;
+    max-width:986px;
+    padding: 162px 56px 162px 56px;
+    font-size: 1.5em;
     font-family:'geometria_bold', helvetica,sans-serif;
     font-weight: bold;
-    color:@medgray;
+    color:@off-black;
     text-align: justify;
     text-transform: uppercase;
+    letter-spacing:3px;
     @media only screen and (min-device-width : 320px) and (max-device-width : 568px) {
         font-size:2em;
       }
   }
 
   #services{
-    background: @dark;
+    background: @off-black;
     height: 100%;
-    padding: 30px 0;
+    padding: 56px 0 106px 0;
     h1,p, li{
       color: @white;
     }
     p{
-      padding:0 10px;
+      padding:46px 56px 56px 56px;
       font-size:1em;
       @media only screen and (min-device-width : 320px) and (max-device-width : 568px) {
           font-size:2em;
@@ -287,6 +303,7 @@ div{width:100%; height:auto;}
     span.line{border-color:@white;}
     ul.all-services{
         margin: 0 auto;
+        padding: 0 56px;
         width: 100%;
 
         @media screen and (max-width:600px) and (min-width:506px){
@@ -356,8 +373,7 @@ div{width:100%; height:auto;}
             li.img{
               width: 100px;
               height: 100px;
-              margin: 0 auto 48px;
-              padding: 20px;
+              margin: 0 auto 44px;
 
             }
             li.head{
@@ -499,6 +515,10 @@ div{width:100%; height:auto;}
       p{padding: 0 40px;margin: 50px 0 0;}
     }
   }
+
+#video-2{
+  background-color:@offwhite;
+}
   //PORTFOLIO
 .hero{
     width: 90%;

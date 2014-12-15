@@ -1,7 +1,7 @@
 
 var nav, featured
 var aspect=16/9, videoIndex=0
-var myPlayer
+var myPlayer, myPlayer2
 
 var videoLoaded=false
 
@@ -56,11 +56,11 @@ function init(){
   userResize()
 
   //VIDEO PLAYER
-  $('.video-js').css('position','absolute')
+  $('.featured-video').css('position','absolute')
   videojs("video-1",{width:window.innerWidth, height: window.innerHeight}).ready(function(){
 	  videoLoaded=true
-    myPlayer = this
-  	sH = window.innerHeight,
+    myPlayer=this
+  	sH = window.innerHeight
 	  sW = window.innerWidth
     myPlayer.src([
 	  		{ type: "video/mp4", src: videoPlay[videoIndex] },
@@ -68,7 +68,6 @@ function init(){
 		])
     myPlayer.volume(0)
     userResize();
-    myPlayer.controls(false);
     myPlayer.on('ended',playNext);
     $('#featured #text').fadeOut('slow',function(){
       $('#featured #text').html(videoText[videoIndex])
@@ -87,6 +86,13 @@ function init(){
     }
 
   })
+
+  videojs("video-2",{"width":"100%","height":572,"preload":"auto"},function(){
+    myPlayer2=this
+    myPlayer2.controls(true)
+    myPlayer2.src("http://player.vimeo.com/external/113635049.hd.mp4?s=cf447f6e232aa11219a7e583071afe90")
+  })
+
 
   //window.addEventListener('resize', userResize, false);
 
@@ -234,7 +240,7 @@ function userResize(){
     $('#mobile-expand').removeClass('active')
     $('#header li').css('display','inline')
     $('#branding').css('display','inline-block')
-    $('#header').height(111)
+    $('#header').height(83)
   }
   else if(!$('#mobile-expand').hasClass('active')){
     $('#header').height(150)

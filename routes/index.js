@@ -14,6 +14,7 @@ router.get('/portfolio', serve.main('index','| Portfolio','#portfolio'));
 router.get('/clients', serve.main('index','| Clients','#clients'));
 /* GET contact page. */
 router.get('/contact', serve.main('index','| Contact','#contact'));
+router.get('/reel', serve.main('index','| Reel','#reel'));
 
 /* Auth Setup & Login Routes */
 router.get('/login',function(req,res){
