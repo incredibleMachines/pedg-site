@@ -20,7 +20,7 @@ h1,h2,h3,h4,h5,h6,p,ul,li,div,section,nav,figure,figcaption{text-align:center;
                                                             font-family: 'geometria_light',helvetica, sans-serif; margin:0;}
 
 h1,h2,h3,h4,h5,h6,strong{
-        font-family:'geometria_bold', helvetica,sans-serif;
+        font-family:'geometria_medium', helvetica,sans-serif;
         text-transform:uppercase;
         letter-spacing:2px;
 }
@@ -1032,54 +1032,55 @@ div{width:100%; height:auto;}
   //Contact
   #contact{
     margin: 0;
-    padding:80px 0 0;
+    padding:56px 0 0;
     max-height:400px;
     min-height:400px;
     background: url('../images/contact.png') no-repeat center #000;
-    p, a , li{ color: #fff;}
+    p, a , li{ color: #fff;
+      width:284px;
+      font-size: 1.8em;
+      font-family:'geometria_light', helvetica,sans-serif;
+      text-transform: uppercase;
+      text-align: justify;
+    }
 
-    p.phone,p.email{
-      font-size: 2.1em;
-      font-family:'geometria_bold', helvetica,sans-serif;
-      font-weight: bold;
-      text-transform: uppercase;
-    }
-    p.email{
-      margin: 0 0 30px;
-    }
-    p.address{
-      text-transform: uppercase;
-      font-size: 1.4em;
-      padding: 0;
-      margin: 0;
-    }
-    ul.social{
-      margin: 10px 0 0;
-      li, li a {
-        text-indent: -9999px;
-        overflow:hidden;
-        width: 45px;
-        height: 45px;
-        display:inline-block;
-        white-space: nowrap;
-        margin: 20px 5px;
+    .text{
+      width:284px;
+      margin:0 auto;
+
+      h1{
+        color:@white;
+        padding-bottom:86px;
       }
-      .twitter{
-        display:inline-block;
-        width: 45px;
-        height: 45px;
-        text-indent: -9999px;
-        overflow:hidden;
-        background:url('/images/twitter.png') center no-repeat;
-      }
-      .facebook{
-        background:url('/images/facebook.png') center no-repeat;
-      }
-      .vimeo{
-        background:url('/images/vimeo.png') center no-repeat;
-      }
-      .linkedin{
-        background:url('/images/linkedin.png') center no-repeat;
+
+      ul.social{
+        margin: 10px 0 0;
+        li, li a {
+          text-indent: -9999px;
+          overflow:hidden;
+          width: 45px;
+          height: 45px;
+          display:inline-block;
+          white-space: nowrap;
+          margin: 20px 5px;
+        }
+        .twitter{
+          display:inline-block;
+          width: 45px;
+          height: 45px;
+          text-indent: -9999px;
+          overflow:hidden;
+          background:url('/images/twitter.png') center no-repeat;
+        }
+        .facebook{
+          background:url('/images/facebook.png') center no-repeat;
+        }
+        .vimeo{
+          background:url('/images/vimeo.png') center no-repeat;
+        }
+        .linkedin{
+          background:url('/images/linkedin.png') center no-repeat;
+        }
       }
     }
     a.backtotop{
@@ -1087,7 +1088,7 @@ div{width:100%; height:auto;}
       height: 10px;
       display: block;
       background:url('/images/up_arrow.png') center no-repeat;
-      margin: 20px auto 0;
+      margin: 54px auto 0;
     }
 
   }
