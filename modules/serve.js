@@ -17,7 +17,7 @@ module.exports.main = function(page,view,section){
       data[coll] = function(_coll){
         return function(callback){
           //debug("RUNNING ASYNC: "+_coll)
-          mongodb.getAll(_coll,function(err,_data){
+          mongodb.queryCollection(_coll,{},{sort:{index:1}},function(err,_data){
             if(err) callback(err)
             else callback(null,_data)
           })
