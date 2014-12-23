@@ -15,15 +15,15 @@ var debug = require('debug')('Admin')
     collections = null
     //passport = null
 
-// router.all('*',ensureAuthenticated)
-// function ensureAuthenticated(req, res, next) {
-//   mongodb =  mongodb || req.app.get('mongodb')
-//   mongodb.getAll('users',function(e,doc){
-//     if(doc.length == 0 ) return res.redirect('/setup')
-//     else if(req.isAuthenticated()) return next()
-//     else return res.redirect('/login')
-//   })
-// }
+router.all('*',ensureAuthenticated)
+function ensureAuthenticated(req, res, next) {
+  mongodb =  mongodb || req.app.get('mongodb')
+  mongodb.getAll('users',function(e,doc){
+    if(doc.length == 0 ) return res.redirect('/setup')
+    else if(req.isAuthenticated()) return next()
+    else return res.redirect('/login')
+  })
+}
 
 /*Check for valid types only*/
 router.use('/:type',function(req, res, next) {
