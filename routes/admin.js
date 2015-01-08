@@ -90,6 +90,62 @@ router.get('/:type/:slug/delete', function(req, res) {
   //res.jsonp({TODO:'delete-project',req:{type:type,slug:slug}})
 });
 
+/* POST Admin Page - Single Project ReOrder */
+/* !!INPROGRESS!! */
+
+router.get('/:type/:slug/:order',function(req,res){
+  mongodb = mongodb || req.app.get('mongodb')
+  var type  = req.params.type,
+      slug  = req.params.slug,
+      order = req.params.order
+
+  debug('GET /'+type+'/'+slug+'/'+order)
+
+  //get all of our collection
+  //so that we can figure out what needs to be updated
+  mongodb.queryCollection(type,{},{sort:{index:1}},function(err,results){
+
+
+    if(order < 0){
+      order = 0
+      return res.redirect(303,'/admin')
+    }
+    if(order > results.length-1){
+      order = results.length-1
+      return res.redirect(303,'/admin')
+    }
+
+    debug("Normalized Order: "+order)
+    //debug(inspect(results))
+    //find the slug we are looking for
+    var _this = _.findWhere(results,{slug:slug})
+    var _that = _.findWhere(results,{index:parseInt(order)})
+    //debug(inspect(_this))
+    //debug(inspect(_that))
+
+    var _thisNew = parseInt(_this.index),
+        _order = parseInt(order)
+
+
+    async.parallel([function(cb){
+      mongodb.updateByID(type,_this._id,{$set:{index:_order}},function(err){
+        if(err) return cb(err)
+        return cb()
+      })
+    },function(cb){
+      mongodb.updateByID(type,_that._id,{$set:{index:_thisNew}},function(err){
+        if(err) return cb(err)
+        return cb()
+      })
+    }],function(err,results){
+      if(err) return res.redirect(303,'/admin')
+      return res.redirect(303,'/admin')
+    })
+
+  })
+
+})
+
 /* POST Admin Page - Single Project Update */
 /* Serve Login Serve Page */
 router.post('/:type/:slug',function(req,res){

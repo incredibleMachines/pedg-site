@@ -182,7 +182,7 @@ mixin dataGroup(name,collection)
           tr
             th="#"
             -each val,index in collection[0]
-              unless index =='_id' || index=='slug'
+              unless index =='_id' || index=='slug' || index=='index'
                 -keys.push(index)
                 th=index
             th(width="10%")='Actions'
@@ -195,7 +195,7 @@ mixin dataGroup(name,collection)
               -each index in keys
                 case index
                   when '_id'
-                    =''
+                  when 'index'
                   when 'slug'
                     =''
                   when 'url'
@@ -221,3 +221,11 @@ mixin dataGroup(name,collection)
                 .btn-group
                   a.btn.btn-default.btn-xs(href="/admin/"+name+"/"+_item.slug,role='button')="Edit"
                   a.btn.btn-danger.btn-xs.delete(href="/admin/"+name+"/"+_item.slug+"/delete",role='button')="Delete"
+                -if(_item.hasOwnProperty('index'))
+                  p="Move Index"
+                  .btn-group
+                    -var idx = parseInt(_item.index)
+                    a.btn.btn-default.btn-xs(href="/admin/"+name+"/"+_item.slug+"/"+(idx-1))
+                      span.glyphicon.glyphicon-chevron-up
+                    a.btn.btn-default.btn-xs(href="/admin/"+name+"/"+_item.slug+"/"+(idx+1))
+                      span.glyphicon.glyphicon-chevron-down

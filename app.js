@@ -76,7 +76,7 @@ var db = new Database({database:'PEDG', collections:collections},function(){
 
 
 app.use(favicon());
-app.use(logger('dev'));
+//app.use(logger('dev'));
 //app.use(busboy({ immediate: true, limits:{ fileSize: 10*1024*1024 } }))
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
