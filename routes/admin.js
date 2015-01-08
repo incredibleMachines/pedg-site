@@ -93,13 +93,13 @@ router.get('/:type/:slug/delete', function(req, res) {
 /* POST Admin Page - Single Project ReOrder */
 /* !!INPROGRESS!! */
 
-router.get('/:type/:slug/:order',function(req,res){
+router.get('/:type/:slug/order/:order',function(req,res){
   mongodb = mongodb || req.app.get('mongodb')
   var type  = req.params.type,
       slug  = req.params.slug,
       order = req.params.order
 
-  debug('GET /'+type+'/'+slug+'/'+order)
+  debug('GET /'+type+'/'+slug+'/order/'+order)
 
   //get all of our collection
   //so that we can figure out what needs to be updated

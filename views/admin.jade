@@ -225,7 +225,7 @@ mixin dataGroup(name,collection)
                   p="Move Index"
                   .btn-group
                     -var idx = parseInt(_item.index)
-                    a.btn.btn-default.btn-xs(href="/admin/"+name+"/"+_item.slug+"/"+(idx-1))
+                    a.btn.btn-default.btn-xs(href="/admin/"+name+"/"+_item.slug+"/order/"+(idx-1))
                       span.glyphicon.glyphicon-chevron-up
-                    a.btn.btn-default.btn-xs(href="/admin/"+name+"/"+_item.slug+"/"+(idx+1))
+                    a.btn.btn-default.btn-xs(href="/admin/"+name+"/"+_item.slug+"/order/"+(idx+1))
                       span.glyphicon.glyphicon-chevron-down
