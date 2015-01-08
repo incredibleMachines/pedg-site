@@ -87,10 +87,13 @@ function init(){
 
   })
 
-  videojs("video-2",{"width":"100%","height":572,"preload":"auto"},function(){
+  videojs("video-2",{"width":"100%","height":572}).ready(function(){
     myPlayer2=this
     myPlayer2.controls(true)
-    myPlayer2.src("http://player.vimeo.com/external/113635049.hd.mp4?s=cf447f6e232aa11219a7e583071afe90")
+  myPlayer2.src([
+  { type: "video/mp4", src: videoPlay[videoIndex] },
+  // { type: "video/ogg", src: "/videos/homepage/"+videoPlay[videoIndex].ogv }
+  ])
   })
 
 
