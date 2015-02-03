@@ -516,8 +516,8 @@ div{width:100%; height:auto;}
     }
   }
 
-#video-2{
-  background-color:@offwhite;
+#reel{
+  padding-top:50px;
 }
   //PORTFOLIO
 .hero{
@@ -573,16 +573,19 @@ div{width:100%; height:auto;}
       margin-top:-20px;
     }
     #active{
-      width: 80%;
-      margin: 0 auto;
-      position: relative;
+      width: 70%;
+      margin: 0 15%;
+      padding:30px;
+      position: absolute;
+      background-color:#fff;
+      z-index:999;
       div.close-active{
-        width:37px;
-        height:40px;
+        width:18px;
+        height:22px;
         position: absolute;
-        top: -60px;
-        right: 0;
-        background: url('../images/close.png')
+        top: 6px;
+        right: 7px;
+        background: url('../images/close.png');
       }
       #project-featured{
         .slideshow{
@@ -597,18 +600,18 @@ div{width:100%; height:auto;}
           }
           .slidesjs-next{
             bottom: 60%;
-            left: 100%;
+            right: -6px;
             background:url('../images/right_arrow.png') center no-repeat;
           }
           .slidesjs-previous{
             bottom: 60%;
-            right: 100%;
+            left: -6px;
             background:url('../images/left_arrow.png') center no-repeat;
           }
           ul.slidesjs-pagination{
             position:absolute;
             left:50%;
-            top: 62%;
+            top: 75%;
             .slidesjs-pagination-item{
               display:inline;
               padding: 0;
@@ -638,29 +641,22 @@ div{width:100%; height:auto;}
         }
       }
       #project-desc{
-        width: 80%;
-        @media screen and (max-width:500px){
-          width:90%;
-        }
-        @media only screen and (min-device-width : 320px) and (max-device-width : 568px) {
-            width:90%;
-        }
-        height: 220px;
-        margin: 30px auto;
+        padding-top:8px;
         position: relative;
-        border: 1px solid @solidgray;
         height: auto;
         display:block;
         .details{
-          width: 50%;
-          height: 100%;
-          padding: 12px 20px;
+          width: 100%;
           position: relative;
           float: left;
-          border-right: 1px solid @solidgray;
-          display: table;
+          border-bottom: 1px solid @solidgray;
+          .event p{
+            font-family:'geometria_medium', helvetica,sans-serif;
+            font-size:20px;
+            letter-spacing:2px;
+          }
           h5,p {text-align:left;
-            font-size: 14px;
+            font-size: 10px;
             @media only screen and (min-device-width : 320px) and (max-device-width : 568px) {
                 font-size:1.6em;
             }
@@ -668,25 +664,23 @@ div{width:100%; height:auto;}
             margin:0;
             padding:0;
             text-transform: uppercase; }
+          h5{font-family:'geometria_medium', helvetica,sans-serif; padding-top:3px;}
           p{padding-top: 1px;}
-          article{padding: 10px 0 0 10px;}
+          article{
+            padding:4px 40px 12px 0;
+            float:left;
+          }
         }
         .desc{
-          width: 50%;
-          height: 100%;
-          padding: 30px 20px;
           position:relative;
-          float: right;
+          float: left;
+          padding-top:10px;
           //border: 1px solid black;
           overflow-x: auto;
           verticle-align: middle;
           p {
-            text-align:right;
-            font-size: 14px; /*font-size: 1.1em;*/
-            vertical-align:middle;
-            @media only screen and (min-device-width : 320px) and (max-device-width : 568px) {
-                font-size:1.6em;
-            }
+            font-size: 12px;
+            text-align:left;
           }
         }
       }
@@ -821,48 +815,42 @@ div{width:100%; height:auto;}
         }
       }
       img.branding{
-        width: 250px;
-        max-width: 15%;
+        width: 15%;
         height: auto;
         position: absolute;
-        top:30%;
-        left: 20%;
+        top:10%;
+        right:43%;
         @media screen and (max-width:700px){
-          left: 15%;
-          top:40%
+          width:20%;
+          right:40%;
         }
       }
       p.quote{
-        position:absolute;
-        top: 30%;
-        left: 45%;
-        max-width: 25%;
-        @media screen and (max-width:1100px){
-          top:20%;
-        }
-        @media screen and (max-width:700px){
-          max-width: 35%;
-        }
         span{display:block;}
         .left,.right{
           font-family: arial;
           font-weight: bold;
-          color: @dkgray;
+          color: @white;
           font-size: 8em;
           position: absolute;
+          z-index:999;
           @media screen and (max-width:1100px){
             font-size:6em;
           }
         }
         .text{
+          position:absolute;
+          top:45%;
+          left:15%;
+          width:70%;
           text-transform:uppercase;
-          color: @medgray;
+          color: @white;
           text-align:justify;
-          font-size: 2em;
-          font-family:'geometria_bold', helvetica,sans-serif;
+          font-size: 1.6em;
+          font-family:'geometria_medium', helvetica,sans-serif;
           font-weight: bold;
           @media screen and (max-width:1100px){
-            font-size:1.6em;
+            top:40%;
           }
           @media screen and (max-width:700px){
             font-size:1.3em;
@@ -878,13 +866,18 @@ div{width:100%; height:auto;}
         }
         .name{
           position:absolute;
-          color: @quote;
-          margin: 15px 0 0;
+          color: @white;
+          top:65%;
+          right:15%;
+          text-align:right;
+          width:auto;
           font-family:'geometria_bold', helvetica,sans-serif;
           font-weight: bold;
           font-size: 1.1em;
           @media screen and (max-width:700px){
             font-size:.9em;
+            top:75%;
+            right:10%;
           }
           @media only screen and (min-device-width : 320px) and (max-device-width : 568px) {
               font-size:1.6em;
@@ -1037,9 +1030,10 @@ div{width:100%; height:auto;}
     min-height:400px;
     background: url('../images/contact.png') no-repeat center #000;
     p, a , li{ color: #fff;
-      width:284px;
+      width:300px;
       font-size: 1.8em;
-      font-family:'geometria_light', helvetica,sans-serif;
+      font-family:'geometria_medium', helvetica,sans-serif;
+      letter-spacing:1.5px;
       text-transform: uppercase;
       text-align: justify;
     }

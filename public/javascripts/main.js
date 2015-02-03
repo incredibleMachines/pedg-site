@@ -4,6 +4,7 @@ var aspect=16/9, videoIndex=0
 var myPlayer, myPlayer2
 
 var videoLoaded=false
+var projectOpen=false
 
 var opts = {speed: 1750, easing: 'easeOutCubic',updateURL: false, offset: 0}
 
@@ -43,8 +44,14 @@ function init(){
   smoothScroll.init(_opts);
   $('#testimonials').slidesjs({
     height:240,
-    navigation: {active:true,effect:'slide'},
-    pagination: {active:false}
+    navigation: {active:false,
+      effect:'slide'},
+    pagination: {active:false},
+    play: {
+      active: true,
+      auto: true,
+      interval: 5000
+    }
   })
   $('#process .slideshow').slidesjs({
     width: 960,
@@ -57,22 +64,17 @@ function init(){
 
   //VIDEO PLAYER
   $('.featured-video').css('position','absolute')
-  videojs("video-1",{width:window.innerWidth, height: window.innerHeight}).ready(function(){
+  videojs("video-1",{width:window.innerWidth, height: window.innerHeight, loop:"true"}).ready(function(){
 	  videoLoaded=true
     myPlayer=this
   	sH = window.innerHeight
 	  sW = window.innerWidth
     myPlayer.src([
-	  		{ type: "video/mp4", src: videoPlay[videoIndex] },
+    { type: "video/mp4", src: "http://player.vimeo.com/external/116588536.hd.mp4?s=08d2d94384d57f6bfa001360a377cfe1" },
 	 		 // { type: "video/ogg", src: "/videos/homepage/"+videoPlay[videoIndex].ogv }
 		])
     myPlayer.volume(0)
-    userResize();
-    myPlayer.on('ended',playNext);
-    $('#featured #text').fadeOut('slow',function(){
-      $('#featured #text').html(videoText[videoIndex])
-      $('#featured #text').fadeIn('slow')
-    })
+    userResize()
     //var opts = {offset: nav.offsetHeight,updateURL:false,easing:'easeOutCubic',speed:1750}
     //once video loads handle page navigation
     if(project != null){
@@ -87,14 +89,6 @@ function init(){
 
   })
 
-  videojs("video-2",{"width":"100%","height":572}).ready(function(){
-    myPlayer2=this
-    myPlayer2.controls(true)
-  myPlayer2.src([
-  { type: "video/mp4", src: videoPlay[videoIndex] },
-  // { type: "video/ogg", src: "/videos/homepage/"+videoPlay[videoIndex].ogv }
-  ])
-  })
 
 
   //window.addEventListener('resize', userResize, false);
@@ -155,12 +149,7 @@ function beforeScroll(toggle,anchor){
 
 }
 
-$('#active .close-active').click(function(e){
-  $('#active').hide();
-  if(window.history.pushState){
-    window.history.pushState('/portfolio','portfolio','/portfolio')
-  }
-})
+$('#active .close-active').click(closeProject)
 
 $('#featured #nav-left').click(function(e){
   playPrev()
@@ -193,8 +182,29 @@ $('#mobile-expand').click(function(e){
   }
 })
 
+$('html').click(function(){
+  if(projectOpen==true){
+    closeProject()
+    }
+  }
+);
+
+$('#portfolio #active').click(function(event){
+  event.stopPropagation();
+});
+
 function hasClass(element,cls){
   return (' ' + element.className + ' ').indexOf(' ' + cls + ' ') > -1;
+}
+
+//CLOSE PROJECT
+function closeProject(){
+  projectOpen=false
+  $('#active').hide();
+  $(".projects, #reel, #about, #clients").fadeTo(500, 1)
+  if(window.history.pushState){
+    window.history.pushState('/portfolio','portfolio','/portfolio')
+  }
 }
 
 
@@ -249,6 +259,8 @@ function userResize(){
     $('#header').height(150)
     $('#header li').css('display','none')
   }
+
+  $('#reel iframe').height($('#reel iframe').width()*(720/1280))
 }
 
 function playNext(){
@@ -309,7 +321,10 @@ function playSelected(newIndex){
 
 function populateProject(json,cb){
   //console.log(json)
-  $("#active").show()
+  projectOpen=true
+  $(".projects, #reel, #about, #clients").fadeTo(500, 0.2)
+  $('#portfolio #active').css({top:document.body.scrollTop+$("nav").height()+10})
+  $("#portfolio #active").fadeTo(500,1)
   $('#project-featured .slideshow').remove()
   $("#project-desc .desc p").html(json.description)
   $("#project-desc .details .event p").html(json.title)
@@ -340,7 +355,6 @@ function populateProject(json,cb){
   $('#project-featured .'+json.slug+" ")
   $('#portfolio #active #project-desc').height($('#portfolio #active #project-desc .details').outerHeight())
   $('#project-featured .slideshow ul.slidesjs-pagination').css('margin-left',"-"+($('#project-featured .slideshow ul.slidesjs-pagination').innerWidth()/2)+"px")
-
   cb()
 }
 
@@ -353,7 +367,7 @@ function something(toggle){
   if(window.history.pushState){
     //console.log(anchor)
     var val = 'portfolio'
-    window.history.pushState('/'+val+'/'+slug,'/'+val+'/'+slug,'/'+val+'/'+slug)
+    window.history.pushState('/'+val,'/'+val,'/'+val)
   }
   $.ajax({
           type:"POST",
@@ -362,7 +376,7 @@ function something(toggle){
   }).done(function(json){
       //console.log(JSON.stringify(json))
       populateProject(json,function(){
-        smoothScroll.animateScroll( null, '#active', opts);
+        // smoothScroll.animateScroll( null, '#active', opts);
       })
   })
 }

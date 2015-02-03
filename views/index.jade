@@ -62,23 +62,23 @@ block about
         li.design
           ul.services
             li.img
-            li.head design
-            li lighting
-            li multi media scenic
-            li video content
-            li graphic design
+            li.head create
+            li environment
+            li light & video
+            li style & content
+            li graphic narrative
         li.model
           ul.services
             li.img
-            li.head technical
+            li.head develop
+            li 3d modeling & rendering
+            li site planning & drafting
             li previsualization
             li programming
-            li site planning
-            li 3d modeling
         li.direct
           ul.services
             li.img
-            li.head direction
+            li.head direct
             li show
             li creative
             li technical
@@ -110,7 +110,7 @@ block about
 
 block reel
   section#reel
-    video#video-2.video-js
+    <iframe src="//player.vimeo.com/video/116556954?color=ffffff&title=0&byline=0&portrait=0" width="80%" height="100%" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
 
 block portfolio
   section#portfolio
@@ -121,17 +121,17 @@ block portfolio
         #project-desc
           .details
             article.event
-              h5="Event:"
               p
-            article.role
-              h5="Role:"
-              p
-            article.location
-              h5="Location:"
-              p
-            article.dates
-              h5="Date(s):"
-              p
+            .right
+              article.role
+                h5="Role:"
+                p
+              article.location
+                h5="Location:"
+                p
+              article.dates
+                h5="Date(s):"
+                p
           .desc
             p
     //-
@@ -208,7 +208,7 @@ mixin testimonial(_test)
       img.branding(src=_test.logo)
       p.quote
         span.left &ldquo;
-        span.text #{_test.text}
+        span.text &ldquo;#{_test.text}&rdquo;
         span.name #{_test.name}
           span.title #{_test.title}
         span.right &rdquo;
