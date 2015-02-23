@@ -183,88 +183,23 @@ div{width:100%; height:auto;}
     width:100%;
     overflow:hidden;
     position:absolute;
-    background:black;
+    background:white;
     top:0;
     ul,li{
       height: inherit;
     }
-    #text{
-      position: absolute;
-      font-size: 6em;
-      color: @white;
-      font-family: 'geometria_bold', helvetica,sans-serif;
-      text-transform: uppercase;
-      z-index: 999;
-      line-height: 1.2em;
-      //top: 50%;
-      bottom: 30%;
-      //right: 50%;
-      //text-align: center justify;
-      //max-width: 40%;
-
+    .grid{
+      position:relative;
+      background: url('../images/screen.png');
+      width:100%;
+      height:100%;
+      z-index:9999;
     }
-
     .video-js{
       overflow:hidden;
-    }
-    ul.slidesjs-pagination{
-      position:absolute;
-      left:50%;
-      top: 90%;
-      .slidesjs-pagination-item{
-        display:inline;
-        padding: 0;
-        margin: 0 2px;
-        a{
-          padding: 0;
-          margin: 0;
-          display:inline-table;
-          position:relative;
-          z-index: 99999;
-          width: 30px;
-          background-color: @offwhite;
-          opacity: .5;
-          overflow:hidden;
-          text-indent: -9999px;
-          white-space: nowrap;
-          font-size: 4px;
-        }
-        a.active{
-          opacity: 1;
-        }
-      }
+      z-index:0;
     }
 
-    #nav-left{
-      position:absolute;
-      height:30px;
-      width:30px;
-      top: 45%;
-      left: 20px;
-      background:url('../images/inverse_left_arrow.png') center no-repeat;
-      z-index:999;
-    }
-    #nav-right{
-      position:absolute;
-      height:30px;
-      width:30px;
-      top: 45%;
-      right: 30px;
-      background:url('../images/inverse_right_arrow.png') center no-repeat;
-      z-index:999;
-    }
-
-    figure{
-      height: inherit;
-      position: relative;
-      figcaption{
-        position:absolute;
-        top: 50%;
-        left: 0;
-        width: 100%;
-        margin: 0 auto;
-      }
-    }
   }
   //ABOUT
   .callout{
@@ -609,6 +544,7 @@ div{width:100%; height:auto;}
             background:url('../images/left_arrow.png') center no-repeat;
           }
           ul.slidesjs-pagination{
+            display:none;
             position:absolute;
             left:50%;
             top: 75%;

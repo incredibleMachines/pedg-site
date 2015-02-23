@@ -322,8 +322,9 @@ function playSelected(newIndex){
 function populateProject(json,cb){
   //console.log(json)
   projectOpen=true
+  var bodyScroll=$('body')
   $(".projects, #reel, #about, #clients").fadeTo(500, 0.2)
-  $('#portfolio #active').css({top:document.body.scrollTop+$("nav").height()+10})
+  $('#portfolio #active').css({top:window.scrollY+$("nav").height()+10})
   $("#portfolio #active").fadeTo(500,1)
   $('#project-featured .slideshow').remove()
   $("#project-desc .desc p").html(json.description)

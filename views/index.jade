@@ -24,24 +24,8 @@ block nav
 
 block featured
   #featured
-    //-
-      img#placeholder(src="images/placeholder.jpg")
-      #text
-      ul.slidesjs-pagination
-        -var c = 0
-        -each val in data.featured
-          -c++
-          li.slidesjs-pagination-item
-            unless c == 1
-              a(class=c-1) #{val.text}
-            else
-              a.active(class=c-1) #{val.text}
-
-
     video#video-1.video-js.featured-video(preload='auto',autoplay)
-    //-
-      #nav-left
-      #nav-right
+    div.grid
 
 
 block about
