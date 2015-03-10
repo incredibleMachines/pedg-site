@@ -349,8 +349,8 @@ function populateProject(json,cb){
   }
 
   $('#project-featured .'+json.slug).slidesjs({
-    width: 960,
-    height: 515,
+    width: 870,
+    height: 440,
     navigation: {active:true,effect:'slide'}
   })
   $('#project-featured .'+json.slug+" ")
